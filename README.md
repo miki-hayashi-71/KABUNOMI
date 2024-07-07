@@ -116,8 +116,6 @@
 
 - 検索履歴をデータベースに保存し、ユーザーが過去の検索を確認できるようにする
 
-### 検索履歴の確認機能
-
 ## 画面遷移図
 
 Figma：https://www.figma.com/design/yUXUMkFEB7Cq0AhOMM1ZLU/Snence_Of_Distance?node-id=0-1&t=8EIb9VEk0Q1hDZix-1
