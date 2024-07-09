@@ -119,3 +119,7 @@
 ## 画面遷移図
 
 Figma：https://www.figma.com/design/yUXUMkFEB7Cq0AhOMM1ZLU/Snence_Of_Distance?node-id=0-1&t=8EIb9VEk0Q1hDZix-1
+
+## ER 図
+
+Gyazo：https://gyazo.com/c674811a48d2bb5935c98f9184d1c667
