@@ -122,4 +122,4 @@ Figma：https://www.figma.com/design/yUXUMkFEB7Cq0AhOMM1ZLU/Snence_Of_Distance?n
 
 ## ER 図
 
-Gyazo：https://gyazo.com/eeff146a0629a516cd56ac63c32eb4a2
+Gyazo：https://gyazo.com/0cacd4f63295838659f9bce849db34e6
