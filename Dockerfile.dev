@@ -14,3 +14,7 @@ RUN mkdir /myapp
 WORKDIR /myapp
 RUN gem install bundler
 COPY . /myapp
+
+# Install JavaScript dependencies and additional tools
+RUN yarn install --frozen-lockfile && \
+    yarn add tailwindcss esbuild
