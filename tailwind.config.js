@@ -11,7 +11,7 @@ module.exports = {
       {
         seenceofplace: {
           "primary": "#BFE0CD",
-          "secondary": "#f6d860",
+          "secondary": "#7E615B",
           "accent": "#37cdbe",
           "neutral": "#3d4451",
           "base-100": "#F6F0D0",
