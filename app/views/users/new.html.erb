@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-auto">
+      <%
+=begin%>
+ <div class='text-center'>
+        <%= link_to 'ログインページへ', login_path %>
+      </div> 
+<%
+=end%>
+    </div>
+  </div>
+</div>
+
+<div class="flex flex-col justify-stretch p-10">
+<div class="p-10 bg-base-100 rounded-lg text-secondary">
+  <h2 class="text-2xl text-text-color mb-8">新規ユーザー登録</h2>
+  <%= form_with model: @user do |f| %>
+    <div class="mb-3">
+      <%= f.label :name, "名前", class: "flexform-label" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :email, "メールアドレス", class: "form-label" %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :password, "パスワード", class: "form-label" %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :password_confirmation, "パスワード（確認用）", class: "form-label" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+    <%= f.submit "登録", class: "btn btn-primary " %>
+  <% end %>
+</div>
+</div>
