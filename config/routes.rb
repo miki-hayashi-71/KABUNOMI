@@ -6,10 +6,12 @@ Rails.application.routes.draw do
 
   # ログイン機能関係
   # RESTfulルートで生成したものを、ユーザーが認識しやすいようにカスタムルートで再設定
-  resources :sessions, only: %i[new create destroy] #RESTfulルート
+  # RESTfulルート
+  resources :sessions, only: %i[new create destroy]
 
-  get 'login', to: 'user_sessions#new' #カスタムルート
+  # カスタムルート
+  get 'login', to: 'user_sessions#new'
   post 'login', to: "user_sessions#create"
-  #delete 'logout', to: 'user_sessions#destroy'
+  delete 'logout', to: 'user_sessions#destroy'
 
 end
