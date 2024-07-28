@@ -12,7 +12,11 @@
 
   <body class="flex flex-col min-h-screen bg-primary text-text-color">
     <div class="flex-grow">
-      <%= render 'shared/header' %>
+      <% if logged_in? %>
+        <%= render 'shared/header' %>
+      <% else %>
+        <%= render 'shared/before_login_header' %>
+      <% end %>
       <%= yield %>
     </div>
   </body>
