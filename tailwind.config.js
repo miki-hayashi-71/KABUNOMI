@@ -5,6 +5,14 @@ module.exports = {
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js'
   ],
+  theme: {
+    extend: {
+      padding: {
+        '5': '1.25rem', // Tailwindのデフォルト
+        '10': '2.5rem',  // Tailwindのデフォルト
+      }
+    },
+  },
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
