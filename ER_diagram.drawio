@@ -441,7 +441,7 @@
                         <mxPoint x="807.1200000000001" y="436.63999999999965" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="171" value="CompRoutes" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" parent="1" vertex="1">
+                <mxCell id="171" value="CompareRoutes" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" parent="1" vertex="1">
                     <mxGeometry x="710" width="186" height="305" as="geometry">
                         <mxRectangle x="90" y="280" width="70" height="30" as="alternateBounds"/>
                     </mxGeometry>
