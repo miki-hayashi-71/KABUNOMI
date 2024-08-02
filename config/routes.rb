@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
 
-  ## 地点登録関係
-  resources :routes, only: %i[new create]
+  ## 地点登録、地図表示関係
+  resources :routes, only: %i[new create show]
 
 end
