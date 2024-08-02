@@ -1,0 +1,46 @@
+<div class="flex flex-col justify-stretch p-10">
+  <div class="p-10 bg-base-100 rounded-lg text-secondary">
+    <h2 class="text-2xl font-semibold text-text-color mb-8">比較結果</h2>
+
+    <div class="flex flex-row">
+      <p class="text-lg font-bold">【●●】</p>
+      <p class="text-base">から</p>
+      <p class="text-lg font-bold">【▲▲】</p>
+      <p class="text-base">までの距離は</p>
+    </div>
+    <div class="flex flex-row">
+      <p class="text-lg font-bold">【◆◆】</p>
+      <p class="text-base">から</p>
+      <p class="text-lg font-bold">【■■】</p>
+      <p class="text-base">までの距離と同じくらい！！</p>
+    </div>
+
+    <div class="m-5 px-5">
+      <div class="flex flex-row bg-primary rounded-lg text-secondary">
+        <%# 基準ルートの地図を表示 %>
+        <div class="flex flex-row mb-3 p-5">
+          <div class="flex flex-col">
+            <p class="text-base font-bold">基準ルート</p>
+            <%= image_tag 'map_sample.png' %>
+          </div>
+        </div>
+        <%# 比較ルートの地図を表示 %>
+        <div class="flex flex-row mb-3 p-5">
+          <div class="flex flex-col">
+            <p class="text-base font-bold">比較ルート</p>
+            <%= image_tag 'map_sample.png' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="flex justify-end">
+      <div class="menu menu-horizontal space-x-4">
+        <button class="btn btn-primary text-secondary">
+          <%= link_to "他にも比べてみる！", new_route_path %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
