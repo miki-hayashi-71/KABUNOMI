@@ -15,21 +15,41 @@
       <p class="text-base">までの距離と同じくらい！！</p>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2YZPAf3dSjCOCFvlouDHMb37ZYqAeCII&language=ja&callback=initMap" async defer></script>
+
     <div class="m-5 px-5">
       <div class="flex flex-row bg-primary rounded-lg text-secondary">
         <%# 基準ルートの地図を表示 %>
-        <div class="flex flex-row mb-3 p-5">
-          <div class="flex flex-col">
-            <p class="text-base font-bold">基準ルート</p>
-            <%= image_tag 'map_sample.png' %>
-          </div>
+        <div class="flex flex-col w-1/2 m-3 p-3 bg-white">
+          <p class="text-base font-bold mb-2">基準ルート</p>
+
+          <div id="map1" style="height: 400px; width: 100%;"></div>
+
+          <script>
+            function initMap() {
+              var MyLatLng1 = new google.maps.LatLng(35.6811673, 139.7670516);
+              var Options1 = {
+                zoom: 13,
+                center: MyLatLng1,
+                mapTypeId: 'roadmap'
+              };
+              var map1 = new google.maps.Map(document.getElementById('map1'), Options1);
+
+              var MyLatLng2 = new google.maps.LatLng(33.59344097007448, 130.35152609126914);
+              var Options2 = {
+                zoom: 13,
+                center: MyLatLng2,
+                mapTypeId: 'roadmap'
+              };
+              var map2 = new google.maps.Map(document.getElementById('map2'), Options2);
+            }
+          </script>
         </div>
+
         <%# 比較ルートの地図を表示 %>
-        <div class="flex flex-row mb-3 p-5">
-          <div class="flex flex-col">
-            <p class="text-base font-bold">比較ルート</p>
-            <%= image_tag 'map_sample.png' %>
-          </div>
+        <div class="flex flex-col w-1/2 m-3 p-3 bg-white">
+          <p class="text-base font-bold mb-2">比較ルート</p>
+          <div id="map2" style="height: 400px; width: 100%;"></div>
         </div>
       </div>
     </div>
