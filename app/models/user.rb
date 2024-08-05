@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  # locationモデル:userモデル＝多:1 userが削除されるとlocationsも削除
+  has_many :locations, dependent: :destroy
+
   # 3文字以上（新規レコード作成もしくはcrypted_passwordカラムが更新される時のみ適応）
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   # 値が空でない・passwordの値と一致する（新規レコード作成もしくはcrypted_passwordカラムが更新される時のみ適応）
