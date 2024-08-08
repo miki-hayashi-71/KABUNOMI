@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   ## ユーザー登録関係
   resources :users, only: %i[new create]
 
-
   ## ログイン機能関係
   # RESTfulルートで生成したものを、ユーザーが認識しやすいようにカスタムルートで再設定
   # RESTfulルート
@@ -15,8 +14,7 @@ Rails.application.routes.draw do
   post 'login', to: "user_sessions#create"
   delete 'logout', to: 'user_sessions#destroy'
 
-
-  ## 地点登録、地図表示関係
-  resources :routes, only: %i[new create show]
+  ## クイズ、解答の表示
+  resources :quizzes, only: %i[new show]
 
 end

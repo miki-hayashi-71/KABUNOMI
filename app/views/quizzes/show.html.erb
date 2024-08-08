@@ -1,0 +1,52 @@
+<div class="flex flex-col justify-stretch p-10">
+  <div class="p-10 bg-base-100 rounded-lg text-secondary">
+    <h2 class="text-2xl font-semibold text-text-color mb-8">解答</h2>
+
+    <div class="flex flex-row p-5">
+      <p class="text-lg font-bold">正解！</p>
+    </div>
+
+    <div class="flex flex-row p-5">
+      <p class="text-lg font-bold">【●●】</p>
+      <p class="text-base">から</p>
+      <p class="text-lg font-bold">【▲▲】</p>
+      <p class="text-base">までの距離は</p>
+      <p class="text-lg font-bold">■■</p>
+      <p class="text-base">あります</p>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
+
+    <div class="m-5 px-5">
+      <div class="flex flex-row bg-primary rounded-lg text-secondary">
+        <%# 地図を表示 %>
+        <div class="flex flex-col m-3 p-3 bg-white">
+          <p class="text-base font-bold mb-2">基準ルート</p>
+          <div id="map" style="height: 400px; width: 500px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function initMap() {
+        // map1の初期化
+        var MyLatLng1 = new google.maps.LatLng(35.6811673, 139.7670516);
+        var Options1 = {
+          zoom: 13,
+          center: MyLatLng1,
+          mapTypeId: 'roadmap'
+        };
+        var map = new google.maps.Map(document.getElementById('map'), Options1);
+      }
+    </script>
+
+    <br>
+    <div class="flex justify-end">
+      <div class="menu menu-horizontal space-x-4">
+        <button class="btn btn-primary text-secondary">
+          <%= link_to "他にも比べてみる！", new_quiz_path %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
