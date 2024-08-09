@@ -15,9 +15,13 @@
     <!-- 解答選択部分 背景みどり -->
     <div class="bg-primary rounded-lg text-secondary">
       <div class="flex flex-row p-5 m-5">
-        <button class="btn bg-base-100 m-3 "><%= @distance %>km</button>
-        <button class="btn bg-base-100 m-3"><%= @distance %>km</button>
-        <button class="btn bg-base-100 m-3"><%= @distance %>km</button>
+        <div id="choices">
+          <% @choices.each do |choice| %>
+            <button class="btn text-secondary font-bold bg-base-100 m-3">
+              <%= choice %>km
+            </button>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
