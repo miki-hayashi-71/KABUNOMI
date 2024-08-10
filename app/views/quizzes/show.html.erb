@@ -2,26 +2,26 @@
   <div class="p-10 bg-base-100 rounded-lg text-secondary">
     <h2 class="text-2xl font-semibold text-text-color mb-8">解答</h2>
 
-    <div class="flex flex-row p-5">
-      <p class="text-lg font-bold">正解！</p>
-    </div>
+    <h2 class="text-2xl font-semibold text-text-color mb-8"><%= @result %></h2>
 
     <div class="flex flex-row p-5">
-      <p class="text-lg font-bold">【●●】</p>
+      <p class="text-lg font-bold"><%= @locations[0].name %></p>
       <p class="text-base">から</p>
-      <p class="text-lg font-bold">【▲▲】</p>
+      <p class="text-lg font-bold"><%= @locations[1].name %></p>
       <p class="text-base">までの距離は</p>
-      <p class="text-lg font-bold">■■</p>
-      <p class="text-base">あります</p>
+      <p class="text-lg font-bold">約<%= @correct_answer %> km</p>
+      <p class="text-base">です。</p>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
+    <%
+=begin%>
+ <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
 
     <div class="m-5 px-5">
       <div class="flex flex-row bg-primary rounded-lg text-secondary">
         <%# 地図を表示 %>
         <div class="flex flex-col m-3 p-3 bg-white">
-          <p class="text-base font-bold mb-2">基準ルート</p>
+          <p class="text-base font-bold mb-2">ルート</p>
           <div id="map" style="height: 400px; width: 500px;"></div>
         </div>
       </div>
@@ -38,7 +38,9 @@
         };
         var map = new google.maps.Map(document.getElementById('map'), Options1);
       }
-    </script>
+    </script> 
+<%
+=end%>
 
     <br>
     <div class="flex justify-end">

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   ## クイズ、解答の表示
-  resources :quizzes, only: %i[new show]
+  resources :quizzes, only: %i[new]
+  get 'answer', to: 'quizzes#show'
 
 end
