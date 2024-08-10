@@ -3,15 +3,6 @@ class QuizzesController < ApplicationController
   def new
     # ランダムに並び替え、そのうち2件を取得する
     @locations = Location.order("RANDOM()").limit(2)
-
-    if @locations.size < 2
-      # 2件のデータが取得できなかった場合に実行 ※デプロイ時にNomethodErrorとなるのを防ぐため
-      flash[:alert] = "失敗しちゃったのでもう1回試してみてね"
-      render :new
-      return
-    end
-
-
     # Javascriptに渡せるように設定
     gon.location1 = @locations[0]
     gon.location2 = @locations[1]
