@@ -16,10 +16,12 @@
     <div class="bg-primary rounded-lg text-secondary">
       <div class="flex flex-row p-5 m-5">
         <div id="choices">
-          <% @choices.each do |choice| %>
-            <button class="btn text-secondary font-bold bg-base-100 m-3">
-              <%= choice %>km
-            </button>
+          <%= form_with url: answer_path, method: :get, local: true do %>
+            <% @choices.each do |choice| %>
+              <button type="submit" name="selected_choice" value="<%= choice %>" class="btn text-secondary font-bold bg-base-100 m-3">
+                約<%= choice %>km
+              </button>
+            <% end %>
           <% end %>
         </div>
       </div>

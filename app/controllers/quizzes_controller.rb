@@ -13,11 +13,29 @@ class QuizzesController < ApplicationController
     # generate_choicesメソッドにAPIで計算した正答な距離を引数として@choicesに代入
     @choices = generate_choices(@distance)
 
+    # セッションに保存
+    session[:locations] = @locations.map(&:id)
+    session[:correct_answer] = @distance
+    session[:choices] = @choices
+
   end
 
-  def show;end
+  def show
+    # 各sessionの値を取得し、インスタンス変数に代入する
+    @locations = Location.find(session[:locations])
+    @correct_answer = session[:correct_answer].to_i
+    @selected_choice = params[:selected_choice].to_i
 
-  private
+    # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
+    if @selected_choice == @correct_answer
+      @result = "正解！"
+    else
+      @result = "不正解"
+    end
+
+  end
+
+    private
 
   # 距離計算ロジック location1とlocation2は、newメソッドの@locations[0]と@locations[1]とイコール
   def calculate_distance(location1, location2)
