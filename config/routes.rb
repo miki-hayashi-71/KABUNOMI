@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root "tops#index"
 
+  # 規約関係
+  get '/terms_of_service', to: 'tops#terms_of_service'
+
   ## ユーザー登録関係
   resources :users, only: %i[new create]
 
