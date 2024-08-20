@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # 規約関係
   get '/terms_of_service', to: 'tops#terms_of_service'
+  get '/privacy_policy', to: 'tops#privacy_policy'
 
   ## ユーザー登録関係
   resources :users, only: %i[new create]
