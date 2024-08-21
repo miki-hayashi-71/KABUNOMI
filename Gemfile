@@ -56,6 +56,9 @@ gem'dotenv-rails'
 # Railsの変数をJavaScriptでも使えるようにする
 gem 'gon'
 
+# FontAwesomeでアイコンを使えるようにする
+gem 'font-awesome-rails'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
