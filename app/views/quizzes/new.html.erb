@@ -1,20 +1,16 @@
-<div class="flex flex-col justify-stretch p-10">
-  <div class="p-10 bg-base-100 rounded-lg text-secondary">
+<div class="flex flex-col min-h-screen bg-base-100">
+  <div class="p-10 bg-base-100">
     <!-- 問題文 背景みどり -->
     <div class="bg-primary rounded-lg text-secondary">
       <div class="flex flex-row p-10">
-        <p class="text-lg font-bold"><%= @locations[0].name %></p>
-        <p class="text-base">から</p>
-        <p class="text-lg font-bold"><%= @locations[1].name %></p>
-        <p class="text-base">までの距離は</p>
-        <p class="text-base">何kmあるでしょう？</p>
+        <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は何kmあるでしょう？</p>
       </div>
     </div>
     <br>
 
     <!-- 解答選択部分 背景みどり -->
-    <div class="bg-primary rounded-lg text-secondary">
-      <div class="flex flex-row p-5 m-5">
+    <div class="bg-primary rounded-lg">
+      <div class="flex flex-row justify-center p-5 m-8">
         <div id="choices">
           <%= form_with url: answer_path, method: :get, local: true do %>
             <% @choices.each do |choice| %>

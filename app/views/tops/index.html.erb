@@ -1,12 +1,12 @@
-<div class="flex flex-col min-h-screen bg-base-100 text-text-color">
+<div class="flex flex-col min-h-screen bg-base-100">
   <!-- TOP画像を水平に中央揃え padding(内)10 -->
-  <div class="flex justify-center p-10">
+  <div class="flex justify-center py-10">
     <%= image_tag "top.jpg" %>
   </div>
 
-  <br><br><br>
+  <br>
 
-  <section class="mt-10 p-10 bg-primary rounded-lg text-secondary">
+  <section class="m-10 p-10 bg-primary rounded-lg text-secondary">
     <p class="mb-4">
       <ul>ランダムで表示される2地点間の距離に最も近いを数字を</ul>
     </p>
@@ -15,10 +15,7 @@
     </p>
   </section>
 
-  <br><br>
-
-  <button class="btn btn-primary text-secondary">
-    <%= link_to "クイズに挑戦！", new_quiz_path %>
-  </button>
-
+    <button class="btn btn-primary text-secondary mx-auto">
+      <%= link_to "クイズに挑戦！", new_quiz_path %>
+    </button>
 </div>
