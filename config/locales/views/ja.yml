@@ -1,0 +1,11 @@
+ja:
+  helpers:
+    # フォーム入力後の送信ボタン
+    submit:
+      create: 登録
+      submit: 保存
+      update: 更新
+    # フォームのラベル
+    label:
+      email: メールアドレス
+      password: パスワード
