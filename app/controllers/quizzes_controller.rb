@@ -28,9 +28,9 @@ class QuizzesController < ApplicationController
 
     # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
     if @selected_choice == @correct_answer
-      @result = "正解！"
+      @result = t('quizzes.show.correct')
     else
-      @result = "不正解"
+      @result = t('quizzes.show.incorrect')
     end
 
   end

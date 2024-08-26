@@ -7,17 +7,17 @@ class UserSessionsController < ApplicationController
     @user = login(params[:email], params[:password])
 
     if @user
-      flash[:success] = "ログインに成功しました"
+      flash[:success] = t('user_sessions.new.success')
       redirect_to root_path
     else
-      flash.now[:error] = "ログインに失敗しました"
+      flash.now[:error] = t('user_sessions.new.failure')
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     logout
-    flash[:success] = "ログアウトしました"
+    flash[:success] = t('user_sessions.destroy.success')
     redirect_to root_path, status: :see_other
   end
 end

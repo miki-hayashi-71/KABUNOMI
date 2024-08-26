@@ -1,0 +1,12 @@
+ja:
+  shared:
+    before_login_header:
+      login: ログイン
+      create_user: 新規登録
+    header:
+      logout: ログアウト
+    footer:
+      terms: 利用規約
+      privacy_policy: プライバシーポリシー
+      contact_us: お問い合わせ
+      copy_right: ©︎ 2024 距離感どのくらい？
