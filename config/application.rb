@@ -30,5 +30,9 @@ module Myapp
       g.helper false
       g.test_framework nil
     end
+
+    # i18n対応
+    config.i18n.default_locale = :ja
+
   end
 end
