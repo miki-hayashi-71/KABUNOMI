@@ -18,8 +18,11 @@ Rails.application.routes.draw do
   post 'login', to: "user_sessions#create"
   delete 'logout', to: 'user_sessions#destroy'
 
-  ## クイズ、解答の表示
+  # クイズ、解答の表示
   resources :quizzes, only: %i[new]
   get 'answer', to: 'quizzes#show'
+
+  # プロフィール
+  resource :mypage, only: %i[show edit update]
 
 end

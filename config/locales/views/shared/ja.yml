@@ -4,6 +4,7 @@ ja:
       login: ログイン
       create_user: 新規登録
     header:
+      mypage: マイページ
       logout: ログアウト
     footer:
       terms: 利用規約
