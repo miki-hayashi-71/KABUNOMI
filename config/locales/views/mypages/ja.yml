@@ -4,3 +4,6 @@ ja:
       title: マイページ
     edit:
       title: マイページ編集
+      success: ユーザー情報を更新しました
+      failure: ユーザー情報を更新できませんでした
+    update:
