@@ -1,54 +1,39 @@
-<div class="flex flex-col min-h-screen bg-base-100 p-10">
-  <div class="bg-primary rounded-lg text-secondary">
-    <div class="flex flex-col p-10">
+<div class="flex flex-col h-screen bg-base-100 p-10">
+  <div class="bg-primary rounded-lg text-secondary flex-1 flex flex-col">
+    <div class="flex flex-col p-10 flex-1">
 
-    <h2 class="text-5xl font-semibold text-center mb-5"><%= @result %></h2>
+      <h2 class="text-5xl font-semibold text-center mb-5"><%= @result %></h2>
 
-    <div class="bg-primary rounded-lg text-secondary">
-      <div class="flex flex-row p-10">
-        <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は<span class="text-lg font-bold">約<%= @correct_answer %> km</span>です。</p>
+      <div class="bg-primary rounded-lg text-secondary mb-5">
+        <div class="flex flex-row p-10">
+          <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は<span class="text-lg font-bold">約<%= @correct_answer %> km</span>です。</p>
+        </div>
       </div>
-    </div>
+
+      <!-- Google Maps API を読み込む -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
+
+      <div class="flex justify-center flex-1">
+        <div class="flex flex-row bg-primary rounded-lg text-secondary w-full">
+          <div class="flex flex-col m-3 p-3 bg-white w-full h-full">
+            <p class="text-base font-bold mb-2">ルート</p>
+            <div id="map" class="flex-1 w-full" style="height: 100%; width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 外部ファイルからJavaScriptを読み込み -->
+      <%= javascript_include_tag 'map.js' %>
 
     </div>
   </div>
 
-    <%
-=begin%>
- <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
-
-    <div class="m-5 px-5">
-      <div class="flex flex-row bg-primary rounded-lg text-secondary">
-        <%# 地図を表示 %>
-        <div class="flex flex-col m-3 p-3 bg-white">
-          <p class="text-base font-bold mb-2">ルート</p>
-          <div id="map" style="height: 400px; width: 500px;"></div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function initMap() {
-        // map1の初期化
-        var MyLatLng1 = new google.maps.LatLng(35.6811673, 139.7670516);
-        var Options1 = {
-          zoom: 13,
-          center: MyLatLng1,
-          mapTypeId: 'roadmap'
-        };
-        var map = new google.maps.Map(document.getElementById('map'), Options1);
-      }
-    </script> 
-<%
-=end%>
-
-    <br>
-    <div class="flex justify-end">
-      <div class="menu menu-horizontal space-x-4">
-        <button class="btn btn-primary text-secondary">
-          <%= link_to "他にも比べてみる！", new_quiz_path %>
-        </button>
-      </div>
+  <br>
+  <div class="flex justify-end">
+    <div class="menu menu-horizontal space-x-4">
+      <button class="btn btn-primary text-secondary">
+        <%= link_to "他にも比べてみる！", new_quiz_path %>
+      </button>
     </div>
   </div>
 </div>
