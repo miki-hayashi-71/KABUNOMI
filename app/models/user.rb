@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  # 一般的なクイズ履歴の関連付け
+  has_many :quiz_histories
+
   # 3文字以上（新規レコード作成もしくはcrypted_passwordカラムが更新される時のみ適応）
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   # 値が空でない・passwordの値と一致する（新規レコード作成もしくはcrypted_passwordカラムが更新される時のみ適応）
@@ -10,4 +13,5 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 255 }
   # 値が空でない・ユニークな値
   validates :email, presence: true, uniqueness: true
+
 end

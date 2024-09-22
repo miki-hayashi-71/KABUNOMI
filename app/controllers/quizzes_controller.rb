@@ -1,4 +1,6 @@
 class QuizzesController < ApplicationController
+  # ログインしている場合にのみユーザーをセットする
+  before_action :set_user_if_logged_in
 
   def new
     # ランダムに並び替え、そのうち2件を取得する
@@ -35,6 +37,19 @@ class QuizzesController < ApplicationController
     gon.latitude2 = @locations[1].latitude
     gon.longitude2 = @locations[1].longitude
 
+    # ログインしている場合にのみ回答履歴を保存
+    if @current_user
+      QuizHistory.create!(
+        user_id: @current_user.id,
+        location1_id: @locations[0].id,
+        location2_id: @locations[1].id,
+        user_answer: @selected_choice,
+        correct_answer: @correct_answer,
+        is_correct: @selected_choice == @correct_answer,
+        answered_at: Time.current
+      )
+    end
+
     # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
     if @selected_choice == @correct_answer
       @result = t('quizzes.show.correct')
@@ -43,7 +58,12 @@ class QuizzesController < ApplicationController
     end
   end
 
-    private
+  private
+
+  # ログイン中のユーザーをセット
+  def set_user_if_logged_in
+    @current_user = current_user if logged_in?
+  end
 
   # 距離計算ロジック location1とlocation2は、newメソッドの@locations[0]と@locations[1]とイコール
   def calculate_distance(location1, location2)

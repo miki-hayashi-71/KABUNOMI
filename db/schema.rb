@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_29_084845) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_22_094404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_29_084845) do
     t.index ["latitude", "longitude"], name: "index_locations_on_latitude_and_longitude", unique: true
   end
 
+  create_table "quiz_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "location1_id", null: false
+    t.bigint "location2_id", null: false
+    t.float "user_answer", null: false
+    t.float "correct_answer", null: false
+    t.boolean "is_correct", null: false
+    t.datetime "answered_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location1_id"], name: "index_quiz_histories_on_location1_id"
+    t.index ["location2_id"], name: "index_quiz_histories_on_location2_id"
+    t.index ["user_id", "answered_at"], name: "index_quiz_histories_on_user_id_and_answered_at"
+    t.index ["user_id"], name: "index_quiz_histories_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
@@ -41,4 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_29_084845) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "quiz_histories", "locations", column: "location1_id"
+  add_foreign_key "quiz_histories", "locations", column: "location2_id"
+  add_foreign_key "quiz_histories", "users"
 end
