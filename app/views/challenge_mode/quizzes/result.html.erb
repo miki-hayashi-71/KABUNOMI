@@ -1,0 +1,15 @@
+<div class="flex flex-col min-h-screen bg-base-100">
+  <div class="p-10 bg-base-100">
+    <!-- 問題文 背景みどり -->
+    <div class="bg-primary rounded-lg text-secondary">
+      <div class="flex flex-col p-10">
+        <h1 class="text-3xl font-bold mb-4">結果発表</h1>
+        <p>正解数: <%= @correct_answers %> / <%= @question_count %></p>
+        <%= link_to '解答の詳細を見る', "#", class: 'btn text-secondary font-bold bg-base-100 m-3' %>
+        <%= link_to 'もう一度挑戦する', start_challenge_mode_quizzes_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
+        <%= link_to 'トップページへ戻る', root_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

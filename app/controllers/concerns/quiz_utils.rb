@@ -1,6 +1,5 @@
-class QuizzesController < ApplicationController
-  # ログインしている場合にのみユーザーをセットする
-  before_action :set_user_if_logged_in
+module QuizUtils
+  extend ActiveSupport::Concern # privateのメソッドをinclude先でもprivateにするために必要
 
   def new
     # ランダムに並び替え、そのうち2件を取得する
@@ -22,55 +21,12 @@ class QuizzesController < ApplicationController
     session[:choices] = @choices
   end
 
-  def show
-    # 各sessionの値を取得し、インスタンス変数に代入する
-    @locations = Location.find(session[:locations])
-    @correct_answer = session[:correct_answer].to_i
-    @selected_choice = params[:selected_choice].to_i
-
-    # JavaScriptに渡せるように設定
-    ## 地点1
-    gon.latitude1 = @locations[0].latitude
-    gon.longitude1 = @locations[0].longitude
-
-    ## 地点2
-    gon.latitude2 = @locations[1].latitude
-    gon.longitude2 = @locations[1].longitude
-
-    # ログインしている場合にのみ回答履歴を保存
-    if @current_user
-      QuizHistory.create!(
-        user_id: @current_user.id,
-        location1_id: @locations[0].id,
-        location2_id: @locations[1].id,
-        user_answer: @selected_choice,
-        correct_answer: @correct_answer,
-        is_correct: @selected_choice == @correct_answer,
-        answered_at: Time.current
-      )
-    end
-
-    # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
-    if @selected_choice == @correct_answer
-      @result = t('quizzes.show.correct')
-    else
-      @result = t('quizzes.show.incorrect')
-    end
-  end
-
   private
 
-  # ログイン中のユーザーをセット
-  def set_user_if_logged_in
-    @current_user = current_user if logged_in?
-  end
-
-  # 距離計算ロジック location1とlocation2は、newメソッドの@locations[0]と@locations[1]とイコール
+  # 距離計算ロジック
   def calculate_distance(location1, location2)
-    # 出発地点と到着地点の緯度経度をそれぞれoriginとdestinationに代入
     origin = "#{location1.latitude},#{location1.longitude}"
     destination = "#{location2.latitude},#{location2.longitude}"
-
     api_key = ENV['MAPS_JAVASCRIPT_API']
 
     # APIエンドポイントに対して2点間の距離を計算するための情報を渡す
@@ -86,7 +42,6 @@ class QuizzesController < ApplicationController
 
   # 選択肢を生成するロジック
   def generate_choices(distance)
-
     # distanceに基づいてダミーデータの範囲を設定(±30%)
     variation = (distance * 0.3).round
 
@@ -109,4 +64,9 @@ class QuizzesController < ApplicationController
     choices.shuffle
   end
 
+
+  # ログイン中のユーザーをセット
+  def set_user_if_logged_in
+    @current_user = current_user if logged_in?
+  end
 end

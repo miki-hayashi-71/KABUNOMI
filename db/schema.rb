@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_22_094404) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_23_070144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_094404) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
+  end
+
+  create_table "challenge_results", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "total_questions", default: 10, null: false
+    t.integer "correct_answers", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_challenge_results_on_user_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -57,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_22_094404) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "challenge_results", "users"
   add_foreign_key "quiz_histories", "locations", column: "location1_id"
   add_foreign_key "quiz_histories", "locations", column: "location2_id"
   add_foreign_key "quiz_histories", "users"

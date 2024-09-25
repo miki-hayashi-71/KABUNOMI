@@ -1,7 +1,9 @@
-<div class="flex flex-col h-screen bg-base-100 p-10">
+<%
+=begin%>
+ <div class="flex flex-col h-screen bg-base-100 p-10">
   <div class="bg-primary rounded-lg text-secondary flex-1 flex flex-col">
     <div class="flex flex-col p-10 flex-1">
-
+      <h1><%= session[:challenge_mode][:current_question] %> / <%= session[:challenge_mode][:question_count] %>問目</h1>
       <h2 class="text-5xl font-semibold text-center mb-5"><%= @result %></h2>
 
       <div class="bg-primary rounded-lg text-secondary mb-5">
@@ -31,9 +33,13 @@
   <br>
   <div class="flex justify-end">
     <div class="menu menu-horizontal space-x-4">
-      <button class="btn btn-primary text-secondary">
-        <%= link_to "他にも比べてみる！", new_quiz_path %>
-      </button>
+      <% if session[:challenge_mode][:current_question] < session[:challenge_mode][:question_count] %>
+        <%= link_to "次の質問へ", new_challenge_mode_quiz_path, class: 'btn btn-primary text-secondary' %>
+      <% else %>
+        <%= link_to "結果を見る", result_challenge_mode_quizzes_path, class: 'btn btn-primary text-secondary' %>
+      <% end %>
     </div>
   </div>
-</div>
+</div> 
+<%
+=end%>
