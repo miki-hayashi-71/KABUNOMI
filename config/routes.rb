@@ -19,8 +19,24 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   # クイズ、解答の表示
-  resources :quizzes, only: %i[new]
-  get 'answer', to: 'quizzes#show'
+  namespace :simple_mode do
+    resources :quizzes, only: %i[new] do
+      collection do
+        get 'answer', to: 'quizzes#show'
+      end
+    end
+  end
+
+  # チャレンジモードのクイズと解答の表示
+  namespace :challenge_mode do
+    resources :quizzes, only: [:new, :start] do
+      collection do
+        get 'answer', to: 'quizzes#show'
+        get 'start', to: 'quizzes#start'
+        get 'result', to: 'quizzes#result'
+      end
+    end
+  end
 
   # プロフィール
   resource :mypage, only: %i[show edit update]

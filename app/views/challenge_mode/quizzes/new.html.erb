@@ -2,7 +2,8 @@
   <div class="p-10 bg-base-100">
     <!-- 問題文 背景みどり -->
     <div class="bg-primary rounded-lg text-secondary">
-      <div class="flex flex-row p-10">
+      <div class="flex flex-col p-10">
+        <h1><%= session[:challenge_mode][:current_question] %> / <%= session[:challenge_mode][:question_count] %>問目</h1>
         <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は何kmあるでしょう？</p>
       </div>
     </div>
@@ -12,7 +13,7 @@
     <div class="bg-primary rounded-lg">
       <div class="flex flex-row justify-center p-5 m-8">
         <div id="choices">
-          <%= form_with url: answer_path, method: :get, local: true do %>
+          <%= form_with url: answer_challenge_mode_quizzes_path, method: :get, local: true do %>
             <% @choices.each do |choice| %>
               <button type="submit" name="selected_choice" value="<%= choice %>" class="btn text-secondary font-bold bg-base-100 m-3">
                 約<%= choice %>km

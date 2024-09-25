@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
-  # 一般的なクイズ履歴の関連付け
-  has_many :quiz_histories
+  # Userモデルとquiz_historieモデルは一対多。ユーザーが削除されたら結果も削除
+  has_many :quiz_histories, dependent: :destroy
+  # Userモデルとchallenge_resultモデルは一対多。ユーザーが削除されたら結果も削除
+  has_many :challenge_results, dependent: :destroy
 
   # 3文字以上（新規レコード作成もしくはcrypted_passwordカラムが更新される時のみ適応）
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
