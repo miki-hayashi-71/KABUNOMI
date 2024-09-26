@@ -1,0 +1,31 @@
+<div class="flex flex-col min-h-screen bg-base-100">
+  <div class="p-10 bg-base-100">
+    <!-- 問題文 背景みどり -->
+    <div class="bg-primary rounded-lg text-secondary">
+      <div class="flex flex-col p-10">
+        <h1 class="text-3xl font-bold mb-10">チャレンジモード ランキング</h1>
+
+        <table class="table-auto w-full border-collapse border border-gray-200">
+          <thead>
+            <tr class="bg-white text-lg">
+              <th class="border border-gray-300 py-5">順位</th>
+              <th class="border border-gray-300 py-5">ユーザー名</th>
+              <th class="border border-gray-300 py-5">正答数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rankings.each_with_index do |result, index| %>
+              <tr class="bg-base-100">
+                <td class="border border-gray-300 px-4 py-2 text-center"><%= index + 1 %></td>
+                <td class="border border-gray-300 px-4 py-2"><%= result.user.name %></td>
+                <td class="border border-gray-300 px-4 py-2 text-center"><%= result.correct_answers %> / <%= result.total_questions %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

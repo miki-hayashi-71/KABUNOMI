@@ -117,16 +117,31 @@ module ChallengeMode
       @question_count = challenge[:question_count]
 
       # 結果をデータベースに保存
-      ChallengeResult.create!(
+      @current_challenge = ChallengeResult.create!(
         user: current_user,
         total_questions: @question_count,
         correct_answers: @correct_answers
       )
 
+      # 上位20名のランキングを取得
+      @rankings = ChallengeResult
+                    .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
+                    .order(correct_answers: :desc, created_at: :asc) # 正答数の降順に並べ替え
+                    .limit(20) # 上位20名を表示
+
+      # 今回の挑戦が20位以内にランクインしているか確認。trueかfalseを代入
+      @rank_in_top_20 = @rankings.any? { |result| result.id == @current_challenge.id }
+
       # セッションのクリア
       session.delete(:challenge_mode)
     end
 
+
+    def ranking
+      @rankings = ChallengeResult
+                    .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
+                    .order(correct_answers: :desc) # 正答数の降順に並べ替え
+    end
 
     # private
     #Quiz_Utilsにcalculate_distanceメソッドのモジュール

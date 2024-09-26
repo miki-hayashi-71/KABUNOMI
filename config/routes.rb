@@ -29,13 +29,14 @@ Rails.application.routes.draw do
 
   # チャレンジモードのクイズと解答の表示
   namespace :challenge_mode do
-    resources :quizzes, only: [:new, :start] do
+    resources :quizzes, only: [:new] do
       collection do
         get 'answer', to: 'quizzes#show'
         get 'start', to: 'quizzes#start'
         get 'result', to: 'quizzes#result'
       end
     end
+    get 'ranking', to: 'quizzes#ranking'
   end
 
   # プロフィール
