@@ -25,13 +25,13 @@ module ApplicationHelper
         description: :description,
         type: 'website',
         url: 'https://sence-of-distance.com/ranking ',
-        image: image_url('OGP_image.png'),# 配置するパスやファイル名によって変更
+        image: image_url('ogp.png'),# 配置するパスやファイル名によって変更
         local: 'ja-JP',
       },
       twitter: { # Twitterカードのためのメタタグ情報
         card: 'summary_large_image', # Twitterで表示する場合は大きいカードに変更
         site: '@https://x.com/kin_doo_nichi', # アプリの公式Twitterアカウントがあればアカウント名を記載
-        image: image_url('OGP_image.png'),# カードで表示される画像。配置するパスやファイル名によって変更
+        image: image_url('ogp.png'),# カードで表示される画像。配置するパスやファイル名によって変更
       }
     }
   end
