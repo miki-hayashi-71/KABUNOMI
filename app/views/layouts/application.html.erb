@@ -18,6 +18,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= display_meta_tags(default_meta_tags) %> <!--メタタグの設定（OGP）-->
     <%= include_gon %>
     <script src="https://kit.fontawesome.com/5399691582.js" crossorigin="anonymous"></script>
   </head>
