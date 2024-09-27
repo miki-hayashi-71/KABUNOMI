@@ -17,14 +17,14 @@ module ApplicationHelper
       charset: 'utf-8', # HTMLの文字エンコーディング
       description: '2地点間の距離を3択から選ぶクイズアプリです。',  # ページの説明 検索エンジンやSNSで表示される場合有り
       keywords: 'クイズアプリ,地図クイズ,距離クイズ,googlemap,距離感',  # ページのキーワード
-      canonical: request.original_url, # ページの正規URL
+      canonical: 'https://sence-of-distance.com/', # ページの正規URL
       separator: '|',
       og: { # Open Graphプロトコルのためのメタタグ情報
         site_name: :site,
         title: :title,
         description: :description,
         type: 'website',
-        url: request.original_url,
+        url: 'https://sence-of-distance.com/',
         image: image_url('OGP_image.png'),# 配置するパスやファイル名によって変更
         local: 'ja-JP',
       },
