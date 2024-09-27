@@ -5,6 +5,17 @@
       <div class="flex flex-col p-10">
         <h1 class="text-3xl font-bold mb-4">結果発表</h1>
         <p>正解数: <%= @correct_answers %> / <%= @question_count %></p>
+
+        <% if @rank_in_top_20 %>
+          <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解で上位にランクインしました！%0a", target: '_blank' ,class: 'btn text-secondary font-bold bg-base-100 m-3' do %>
+            <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
+          <% end %>
+        <% else %>
+          <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解しました！%0a", target: '_blank' ,class: 'btn text-secondary font-bold bg-base-100 m-3' do %>
+            <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
+          <% end %>
+        <% end %>
+
         <%= link_to '解答の詳細を見る', "#", class: 'btn text-secondary font-bold bg-base-100 m-3' %>
         <%= link_to 'ランキングを確認する', challenge_mode_ranking_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
         <%= link_to 'もう一度挑戦する', start_challenge_mode_quizzes_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
