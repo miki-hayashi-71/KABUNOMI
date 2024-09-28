@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "tops#index"
+  root 'tops#index'
 
   # 規約関係
   get '/terms_of_service', to: 'tops#terms_of_service'
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   # カスタムルート
   get 'login', to: 'user_sessions#new'
-  post 'login', to: "user_sessions#create"
+  post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
   # クイズ、解答の表示

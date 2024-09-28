@@ -26,11 +26,11 @@ module SimpleMode
       gon.longitude2 = @locations[1].longitude
 
       # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
-      if @selected_choice == @correct_answer
-        @result = t('quizzes.show.correct')
-      else
-        @result = t('quizzes.show.incorrect')
-      end
+      @result = if @selected_choice == @correct_answer
+                  t('quizzes.show.correct')
+                else
+                  t('quizzes.show.incorrect')
+                end
 
       # ログインしている場合にのみ回答履歴を保存
       if @current_user
@@ -48,8 +48,8 @@ module SimpleMode
 
 
     # private
-    #Quiz_Utilsにcalculate_distanceメソッドのモジュール
-    #Quiz_Utilsにgenerate_choicesメソッドのモジュール
+    # Quiz_Utilsにcalculate_distanceメソッドのモジュール
+    # Quiz_Utilsにgenerate_choicesメソッドのモジュール
 
   end
 end
