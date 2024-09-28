@@ -6,6 +6,57 @@ module ChallengeMode
     # ログイン必須
     before_action :require_login
 
+    def show
+      # newで作成されたセッションの情報を読み込み、キーをシンボルに変換
+      challenge = session[:challenge_mode].deep_symbolize_keys
+
+      # 各sessionの値を取得し、インスタンス変数に代入する
+      @locations = Location.find(session[:locations])
+      @correct_answer = session[:correct_answer].to_i
+      @selected_choice = params[:selected_choice].to_i
+
+      # # JavaScriptに渡せるように設定
+      # ## 地点1
+      # gon.latitude1 = @locations[0].latitude
+      # gon.longitude1 = @locations[0].longitude
+      # ## 地点2
+      # gon.latitude2 = @locations[1].latitude
+      # gon.longitude2 = @locations[1].longitude
+
+      # 正誤判定
+      is_correct = @selected_choice == @correct_answer
+
+      # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
+      @result = if is_correct
+                  t('quizzes.show.correct')
+                else
+                  t('quizzes.show.incorrect')
+                end
+
+      # 正解の場合、正解数をカウントアップ
+      challenge[:correct_answers] += 1 if is_correct
+
+      # 回答履歴を保存
+      QuizHistory.create!(
+        user_id: @current_user.id,
+        location1_id: @locations[0].id,
+        location2_id: @locations[1].id,
+        user_answer: @selected_choice,
+        correct_answer: @correct_answer,
+        is_correct:,
+        answered_at: Time.current
+      )
+
+      # セッションの更新
+      session[:challenge_mode] = challenge
+
+      # 次のクイズに進むか、結果画面に遷移
+      if challenge[:current_question] < challenge[:question_count]
+        redirect_to new_challenge_mode_quiz_path
+      else
+        redirect_to result_challenge_mode_quizzes_path
+      end
+    end
     def new
       # チャレンジモードのセッションを初期化（セッションが存在しなければ実行）
       session[:challenge_mode] ||= {
@@ -24,7 +75,7 @@ module ChallengeMode
       end
 
       # ランダムに並び替え、そのうち2件を取得する
-      @locations = Location.order("RANDOM()").limit(2)
+      @locations = Location.order('RANDOM()').limit(2)
 
       # Javascriptに渡せるように設定
       gon.location1 = @locations[0]  # 地点1
@@ -47,65 +98,12 @@ module ChallengeMode
     end
 
 
-    def show
-      # newで作成されたセッションの情報を読み込み、キーをシンボルに変換
-      challenge = session[:challenge_mode].deep_symbolize_keys
-
-      # 各sessionの値を取得し、インスタンス変数に代入する
-      @locations = Location.find(session[:locations])
-      @correct_answer = session[:correct_answer].to_i
-      @selected_choice = params[:selected_choice].to_i
-
-      # # JavaScriptに渡せるように設定
-      # ## 地点1
-      # gon.latitude1 = @locations[0].latitude
-      # gon.longitude1 = @locations[0].longitude
-      # ## 地点2
-      # gon.latitude2 = @locations[1].latitude
-      # gon.longitude2 = @locations[1].longitude
-
-      # 正誤判定
-      is_correct = @selected_choice == @correct_answer
-
-      # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
-      if is_correct
-        @result = t('quizzes.show.correct')
-      else
-        @result = t('quizzes.show.incorrect')
-      end
-
-      # 正解の場合、正解数をカウントアップ
-      if is_correct
-        challenge[:correct_answers] += 1
-      end
-
-      # 回答履歴を保存
-      QuizHistory.create!(
-        user_id: @current_user.id,
-        location1_id: @locations[0].id,
-        location2_id: @locations[1].id,
-        user_answer: @selected_choice,
-        correct_answer: @correct_answer,
-        is_correct: is_correct,
-        answered_at: Time.current
-      )
-
-      # セッションの更新
-      session[:challenge_mode] = challenge
-
-      # 次のクイズに進むか、結果画面に遷移
-      if challenge[:current_question] < challenge[:question_count]
-        redirect_to new_challenge_mode_quiz_path
-      else
-        redirect_to result_challenge_mode_quizzes_path
-      end
-    end
 
 
     def result
       # セッションがない場合はトップページにリダイレクト
       unless session[:challenge_mode]
-        redirect_to root_path, alert: "セッションが期限切れです。もう一度チャレンジしてください。"
+        redirect_to root_path, alert: t('alerts.session_expired')
         return
       end
 
@@ -125,9 +123,9 @@ module ChallengeMode
 
       # 上位20名のランキングを取得
       @rankings = ChallengeResult
-                    .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
-                    .order(correct_answers: :desc, created_at: :asc) # 正答数の降順に並べ替え
-                    .limit(20) # 上位20名を表示
+                  .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
+                  .order(correct_answers: :desc, created_at: :asc) # 正答数の降順に並べ替え
+                  .limit(20) # 上位20名を表示
 
       # 今回の挑戦が20位以内にランクインしているか確認。trueかfalseを代入
       @rank_in_top_20 = @rankings.any? { |result| result.id == @current_challenge.id }
@@ -139,13 +137,13 @@ module ChallengeMode
 
     def ranking
       @rankings = ChallengeResult
-                    .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
-                    .order(correct_answers: :desc) # 正答数の降順に並べ替え
+                  .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
+                  .order(correct_answers: :desc) # 正答数の降順に並べ替え
     end
 
     # private
-    #Quiz_Utilsにcalculate_distanceメソッドのモジュール
-    #Quiz_Utilsにgenerate_choicesメソッドのモジュール
+    # Quiz_Utilsにcalculate_distanceメソッドのモジュール
+    # Quiz_Utilsにgenerate_choicesメソッドのモジュール
 
   end
 end

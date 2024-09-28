@@ -1,10 +1,10 @@
 module ApplicationHelper
   def flash_background_color(type)
     case type.to_sym
-    when :success then "bg-[#62CB93]"
-    when :alert  then "bg-[#CBB162]"
-    when :error  then "bg-[#B03B3B]"
-    else "bg-[#C6E4EC]"
+    when :success then 'bg-[#62CB93]'
+    when :alert  then 'bg-[#CBB162]'
+    when :error  then 'bg-[#B03B3B]'
+    else 'bg-[#C6E4EC]'
     end
   end
 
@@ -25,13 +25,13 @@ module ApplicationHelper
         description: :description,
         type: 'website',
         url: 'https://sence-of-distance.com/challenge_mode/quizzes/result',
-        image: image_url('ogp.png'),# 配置するパスやファイル名によって変更
+        image: image_url('ogp.png'),  # 配置するパスやファイル名によって変更
         local: 'ja-JP',
       },
       twitter: { # Twitterカードのためのメタタグ情報
         card: 'summary_large_image', # Twitterで表示する場合は大きいカードに変更
         site: '@https://x.com/kin_doo_nichi', # アプリの公式Twitterアカウントがあればアカウント名を記載
-        image: image_url('ogp.png'),# カードで表示される画像。配置するパスやファイル名によって変更
+        image: image_url('ogp.png'),  # カードで表示される画像。配置するパスやファイル名によって変更
       }
     }
   end

@@ -3,7 +3,7 @@ module QuizUtils
 
   def new
     # ランダムに並び替え、そのうち2件を取得する
-    @locations = Location.order("RANDOM()").limit(2)
+    @locations = Location.order('RANDOM()').limit(2)
 
     # Javascriptに渡せるように設定
     gon.location1 = @locations[0]  # 地点1
@@ -27,7 +27,7 @@ module QuizUtils
   def calculate_distance(location1, location2)
     origin = "#{location1.latitude},#{location1.longitude}"
     destination = "#{location2.latitude},#{location2.longitude}"
-    api_key = ENV['MAPS_JAVASCRIPT_API']
+    api_key = ENV.fetch('MAPS_JAVASCRIPT_API', nil)
 
     # APIエンドポイントに対して2点間の距離を計算するための情報を渡す
     url = URI("https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=#{origin}&destinations=#{destination}&key=#{api_key}")
@@ -35,7 +35,7 @@ module QuizUtils
     data = JSON.parse(response)
 
     # APIから帰ってきたdataから必要な情報を取り出し、単位kmに変換する
-    distance_in_km = data["rows"][0]["elements"][0]["distance"]["value"] / 1000.0
+    distance_in_km = data['rows'][0]['elements'][0]['distance']['value'] / 1000.0
     distance_in_km.round(1)
   end
 
