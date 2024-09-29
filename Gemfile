@@ -73,6 +73,10 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
+
+  # Rspec
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -89,6 +93,7 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
 end
 
 group :test do
