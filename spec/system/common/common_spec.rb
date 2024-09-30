@@ -54,7 +54,7 @@ RSpec.describe "トップページ", type: :system do
       expect(page).to have_current_path("https://kiyac.app/privacypolicy/XxakzkL5Hxiv01Ka9WOG", url: true)
     end
 
-    it 'お問い合わせページに遷移できること' do # 短縮系で実装しているが、テストでは正規のURLで遷移を確認
+    it 'お問い合わせページに遷移できること' do # クエリパラメータを無視し、主要な部分（ドメイン＋パス）が一致していれば成功
       click_link 'お問い合わせ'
       expect(page.current_url).to include('https://docs.google.com/forms/d/e/1FAIpQLSdU1KArHAoMY1sAZsvQK7xrJLhcAmBFXPArby2tyACsZj6-IQ/viewform')
     end
