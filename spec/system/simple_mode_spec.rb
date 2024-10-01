@@ -47,7 +47,10 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
       click_button '約500km'
       expect(QuizHistory.count).to eq(1)
       history = QuizHistory.last
+      expect(history.user).to eq(user)
       expect(history.is_correct).to be true
+      expect(history.location1).to eq(location1)
+      expect(history.location2).to eq(location2)
     end
 
     it '不正解の場合、履歴が保存されること' do
