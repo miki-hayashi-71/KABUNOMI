@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "トップページ", type: :system do
+RSpec.describe 'トップページ', type: :system do
 
   context 'ヘッダー' do
 
@@ -16,7 +16,7 @@ RSpec.describe "トップページ", type: :system do
     end
 
     describe 'ログイン後' do
-      let(:user){create(:user)}
+      let(:user){ create(:user) }
 
       before do
         login_as(user)
@@ -45,17 +45,17 @@ RSpec.describe "トップページ", type: :system do
     end
 
     it '利用規約ページに遷移できること' do
-      click_link '利用規約'
+      click_on '利用規約'
       expect(page).to have_current_path(terms_of_service_path)
     end
 
     it 'プライバシーポリシーページに遷移できること' do
-      click_link 'プライバシーポリシー'
-      expect(page).to have_current_path("https://kiyac.app/privacypolicy/XxakzkL5Hxiv01Ka9WOG", url: true)
+      click_on 'プライバシーポリシー'
+      expect(page).to have_current_path('https://kiyac.app/privacypolicy/XxakzkL5Hxiv01Ka9WOG', url: true)
     end
 
     it 'お問い合わせページに遷移できること' do # クエリパラメータを無視し、主要な部分（ドメイン＋パス）が一致していれば成功
-      click_link 'お問い合わせ'
+      click_on 'お問い合わせ'
       expect(page.current_url).to include('https://docs.google.com/forms/d/e/1FAIpQLSdU1KArHAoMY1sAZsvQK7xrJLhcAmBFXPArby2tyACsZj6-IQ/viewform')
     end
 
