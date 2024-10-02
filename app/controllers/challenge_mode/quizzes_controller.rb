@@ -57,6 +57,7 @@ module ChallengeMode
         redirect_to result_challenge_mode_quizzes_path
       end
     end
+
     def new
       # チャレンジモードのセッションを初期化（セッションが存在しなければ実行）
       session[:challenge_mode] ||= {
@@ -97,9 +98,6 @@ module ChallengeMode
       session[:challenge_mode] = challenge
     end
 
-
-
-
     def result
       # セッションがない場合はトップページにリダイレクト
       unless session[:challenge_mode]
@@ -133,7 +131,6 @@ module ChallengeMode
       # セッションのクリア
       session.delete(:challenge_mode)
     end
-
 
     def ranking
       @rankings = ChallengeResult

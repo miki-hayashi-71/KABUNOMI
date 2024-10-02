@@ -39,7 +39,7 @@ RSpec.describe 'マイページ', type: :system do
       it '正しい情報で更新した場合、更新に成功し、マイページにリダイレクトされること' do
         fill_in 'user_name', with: '新しい名前'
         fill_in 'user_email', with: 'newemail@example.com'
-        click_button '更新'
+        click_on '更新'
 
         expect(page).to have_content('ユーザー情報を更新しました')
         expect(page).to have_content('新しい名前')
@@ -50,7 +50,7 @@ RSpec.describe 'マイページ', type: :system do
       it '不正な情報で更新した場合、エラーメッセージが表示されること' do
         fill_in 'user_name', with: ''
         fill_in 'user_email', with: ''
-        click_button '更新'
+        click_on '更新'
 
         expect(page).to have_content('ユーザー情報を更新できませんでした')
       end
