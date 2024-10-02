@@ -1,0 +1,47 @@
+name: github-actions.yml # ワークフローの名前を定義
+
+on:
+  push: # GitHubにpushされた時にワークフローを起動する
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest # 実行環境
+    defaults:
+      run:
+        working-directory: . # 作業ディレクトリを指定
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} # GitHub Secretsを参照
+
+    steps:
+      - name: Checkout code # GitHubのリポジトリからコードをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby # Rubyのセットアップ
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.3 # 使用するRubyのバージョンを指定
+          bundler-cache: true # Bundlerのキャッシュを有効にする
+
+      - name: Cache node modules # Nodeモジュールをキャッシュ
+        uses: actions/cache@v4
+        with:
+          path: node_modules # キャッシュするディレクトリを指定
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }} # キャッシュのキーを指定
+          restore-keys: |
+            ${{ runner.os }}-node-  # 部分一致する最新のキャッシュを探します。
+
+      - name: Bundler and gem install # Bundlerとgemのインストール
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Database create and migrate # データベースの作成とマイグレーションを実行
+        run: |
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Run rspec # RSpecを実行
+        run: bundle exec rspec
