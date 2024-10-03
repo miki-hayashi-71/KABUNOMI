@@ -1,8 +1,10 @@
 class MypagesController < ApplicationController
 
-  before_action :set_user, only: %i[edit update]
+  # user情報をセット
+  before_action :set_user
 
   def show; end
+
   def edit; end
 
   # 更新
