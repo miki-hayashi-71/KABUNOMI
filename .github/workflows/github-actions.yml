@@ -30,11 +30,11 @@ jobs:
           ruby-version: 3.2.3 # 使用するRubyのバージョンを指定
           bundler-cache: true # Bundlerのキャッシュを有効にする
 
-      - name: Install dependencies for system tests
+      - name: Install Chrome
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libnss3 xvfb chromium-browser chromium-chromedriver
-        # XVFBは仮想ディスプレイ環境を提供し、ヘッドレスブラウザをサポートします。
+          sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo apt update
+          sudo apt-get install google-chrome-stable
 
       - name: Cache node modules # Nodeモジュールをキャッシュ
         uses: actions/cache@v4
@@ -54,6 +54,5 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:drop db:create db:migrate RAILS_ENV=test
 
-      - name: Run rspec
-        run: |
-          xvfb-run -a bundle exec rspec
+      - name: Run rspec # RSpecを実行
+        run: bundle exec rspec
