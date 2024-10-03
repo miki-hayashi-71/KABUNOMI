@@ -4,7 +4,51 @@ module ChallengeMode
     include QuizUtils
 
     # ログイン必須
-    before_action :require_login
+    before_action :require_login, only: %i[show new result start]
+    # ログイン不要
+    skip_before_action :require_login, only: %i[ranking]
+
+    def start;end
+
+    def new
+      # チャレンジモードのセッションを初期化（セッションが存在しなければ実行）
+      session[:challenge_mode] ||= {
+        question_count: 10,  # 出題数
+        current_question: 0,  # 現在の問題数
+        correct_answers: 0  # 正解数
+      }
+
+      # challenge_modeハッシュをchallenge変数に代入し、キーをシンボルに変換。変換しとかないと動かなかった
+      challenge = session[:challenge_mode].deep_symbolize_keys
+
+      # 全ての問題に解答済みの場合、結果画面にリダイレクト
+      if challenge[:current_question] >= challenge[:question_count]
+        redirect_to result_challenge_mode_quizzes_path
+        return
+      end
+
+      # ランダムに並び替え、そのうち2件を取得する
+      @locations = Location.order('RANDOM()').limit(2)
+
+      # Javascriptに渡せるように設定
+      gon.location1 = @locations[0]  # 地点1
+      gon.location2 = @locations[1]  # 地点2
+
+      # calculate_distanceのメソッドに対して上記で取得した2地点を引数として渡す
+      @distance = calculate_distance(@locations[0], @locations[1])
+
+      # generate_choicesメソッドにAPIで計算した正答な距離を引数として@choicesに代入
+      @choices = generate_choices(@distance)
+
+      # セッションに保存
+      session[:locations] = @locations.map(&:id)
+      session[:correct_answer] = @distance
+      session[:choices] = @choices
+
+      # 出題カウントを増やす
+      challenge[:current_question] += 1
+      session[:challenge_mode] = challenge
+    end
 
     def show
       # newで作成されたセッションの情報を読み込み、キーをシンボルに変換
@@ -56,46 +100,6 @@ module ChallengeMode
       else
         redirect_to result_challenge_mode_quizzes_path
       end
-    end
-
-    def new
-      # チャレンジモードのセッションを初期化（セッションが存在しなければ実行）
-      session[:challenge_mode] ||= {
-        question_count: 10,  # 出題数
-        current_question: 0,  # 現在の問題数
-        correct_answers: 0  # 正解数
-      }
-
-      # challenge_modeハッシュをchallenge変数に代入し、キーをシンボルに変換。変換しとかないと動かなかった
-      challenge = session[:challenge_mode].deep_symbolize_keys
-
-      # 全ての問題に解答済みの場合、結果画面にリダイレクト
-      if challenge[:current_question] >= challenge[:question_count]
-        redirect_to result_challenge_mode_quizzes_path
-        return
-      end
-
-      # ランダムに並び替え、そのうち2件を取得する
-      @locations = Location.order('RANDOM()').limit(2)
-
-      # Javascriptに渡せるように設定
-      gon.location1 = @locations[0]  # 地点1
-      gon.location2 = @locations[1]  # 地点2
-
-      # calculate_distanceのメソッドに対して上記で取得した2地点を引数として渡す
-      @distance = calculate_distance(@locations[0], @locations[1])
-
-      # generate_choicesメソッドにAPIで計算した正答な距離を引数として@choicesに代入
-      @choices = generate_choices(@distance)
-
-      # セッションに保存
-      session[:locations] = @locations.map(&:id)
-      session[:correct_answer] = @distance
-      session[:choices] = @choices
-
-      # 出題カウントを増やす
-      challenge[:current_question] += 1
-      session[:challenge_mode] = challenge
     end
 
     def result

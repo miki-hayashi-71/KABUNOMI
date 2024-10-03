@@ -14,4 +14,5 @@ ja:
     attributes: 名前
     email: メールアドレス
   alerts:
-    session_expired: "セッションが期限切れです。もう一度チャレンジしてください。"
+    session_expired: セッションが期限切れです。もう一度チャレンジしてください。
+    require_login: ログインが必要です
