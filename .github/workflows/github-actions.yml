@@ -30,6 +30,12 @@ jobs:
           ruby-version: 3.2.3 # 使用するRubyのバージョンを指定
           bundler-cache: true # Bundlerのキャッシュを有効にする
 
+      - name: Install dependencies for system tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 xvfb chromium-browser chromium-chromedriver
+        # XVFBは仮想ディスプレイ環境を提供し、ヘッドレスブラウザをサポートします。
+
       - name: Cache node modules # Nodeモジュールをキャッシュ
         uses: actions/cache@v4
         with:
