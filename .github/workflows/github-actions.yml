@@ -54,5 +54,6 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:drop db:create db:migrate RAILS_ENV=test
 
-      - name: Run rspec # RSpecを実行z
-        run: bundle exec rspec
+      - name: Run rspec
+        run: |
+          xvfb-run -a bundle exec rspec
