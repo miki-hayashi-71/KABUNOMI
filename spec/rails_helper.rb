@@ -76,15 +76,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {
-    browser: :remote,
-    url: ENV.fetch('SELENIUM_DRIVER_URL'),
-    capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
-      "goog:chromeOptions" => { "args" => %w[headless disable-gpu no-sandbox window-size=1400,1400] }
-    )
-  }
+    driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    Capybara.server_port = 3001
+    Capybara.server_port = 4444
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
     Capybara.ignore_hidden_elements = false
   end
