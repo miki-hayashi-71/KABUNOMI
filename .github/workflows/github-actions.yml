@@ -11,17 +11,14 @@ jobs:
         working-directory: . # 作業ディレクトリを指定
     services:
       postgres:
-        image: postgres
+        image: postgres:latest
         env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} # GitHub Secretsを参照
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: test
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Checkout code # GitHubのリポジトリからコードをチェックアウト
@@ -48,8 +45,8 @@ jobs:
 
       - name: Database create and migrate # データベースの作成とマイグレーションを実行
         run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:drop db:create db:migrate RAILS_ENV=test
 
       - name: Run rspec # RSpecを実行z
         run: bundle exec rspec
