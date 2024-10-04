@@ -1,13 +1,14 @@
 class MypagesController < ApplicationController
-
-  # user情報をセット
   before_action :set_user
 
-  def show; end
+  def show
+    @quiz_histories = current_user.quiz_histories.includes(:location1, :location2)
+                                  .order(answered_at: :desc)
+                                  .page(params[:page])
+  end
 
   def edit; end
 
-  # 更新
   def update
     if @user.update(user_params)
       flash[:success] = t('mypages.edit.success', item: User.model_name.human)
@@ -18,15 +19,12 @@ class MypagesController < ApplicationController
     end
   end
 
-
   private
 
-  # ログイン中のユーザーのidを取得し、@userに代入
   def set_user
     @user = User.find(current_user.id)
   end
 
-  # userから各データを受け取ったパラメータ
   def user_params
     params.require(:user).permit(:email, :name)
   end
