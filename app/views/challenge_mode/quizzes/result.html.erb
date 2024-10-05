@@ -1,60 +1,64 @@
 <div class="flex flex-col min-h-screen bg-base-100">
   <div class="p-10 bg-base-100">
-    <!-- 問題文 背景みどり -->
     <div class="bg-primary rounded-lg text-secondary">
-      <div class="flex flex-col p-10">
-        <h1 class="text-3xl font-bold mb-4">結果発表</h1>
-        <p>正解数: <%= @correct_answers %> / <%= @question_count %></p>
-
-        <% if @rank_in_top_20 %>
-          <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解で上位にランクインしました！%0a", target: '_blank' ,class: 'btn text-secondary font-bold bg-base-100 m-3' do %>
-            <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
-          <% end %>
-        <% else %>
-          <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解しました！%0a", target: '_blank' ,class: 'btn text-secondary font-bold bg-base-100 m-3' do %>
-            <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
-          <% end %>
-        <% end %>
-
-        <%= link_to '解答の詳細を見る', "#", class: 'btn text-secondary font-bold bg-base-100 m-3' %>
-        <%= link_to 'ランキングを確認する', challenge_mode_ranking_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
-        <%= link_to 'もう一度挑戦する', start_challenge_mode_quizzes_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
-        <%= link_to 'トップページへ戻る', root_path, class: 'btn text-secondary font-bold bg-base-100 m-3' %>
-      </div>
-    </div>
-    <br>
 
 
-    <!-- ランキングを表示 -->
-    <div class="mt-10 bg-primary rounded-lg text-secondary">
-      <div class="flex flex-col p-10">
-        <h1 class="text-3xl font-bold mb-10">チャレンジモード ランキング（上位20位）</h1>
+      <div class="flex flex-col justify-center items-center px-10">
+        <h2 class="text-4xl font-bold py-20"><%= @correct_answers %> / <%= @question_count %>問正解！</h2>
 
         <% if @rank_in_top_20 %>
           <p class="text-xl font-bold mt-5 text-center text-red-500 mb-10">20位以内にランクインしました🎉</p>
         <% end %>
 
-        <table class="table-auto w-full border-collapse border border-gray-200">
-          <thead>
-            <tr class="bg-white text-lg">
-              <th class="border border-gray-300 py-5">順位</th>
-              <th class="border border-gray-300 py-5">ユーザー名</th>
-              <th class="border border-gray-300 py-5">正答数</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @rankings.each_with_index do |result, index| %>
-              <tr class="<%= result.id == @current_challenge.id ? 'bg-yellow-100' : 'bg-base-100' %>">
-                <td class="border border-gray-300 px-4 py-2 text-center"><%= index + 1 %></td>
-                <td class="border border-gray-300 px-4 py-2"><%= result.user.name %></td>
-                <td class="border border-gray-300 px-4 py-2 text-center"><%= result.correct_answers %> / <%= result.total_questions %></td>
-              </tr>
+        <div class="flex flex-row justify-center space-x-20 px-10 mx-8 py-5">
+          <% if @rank_in_top_20 %>
+            <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解で上位にランクインしました！%0a", target: '_blank', class: 'btn btn-neutral bg-base-100 text-secondary' do %>
+              <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
             <% end %>
-          </tbody>
-        </table>
+          <% else %>
+            <%= link_to "https://twitter.com/share?url=https://sence-of-distance.com/challenge_mode/ranking&text=#{@question_count}問中#{@correct_answers}問正解しました！%0a", target: '_blank', class: 'btn btn-neutral bg-base-100 text-secondary' do %>
+              <i class="fa-brands fa-square-x-twitter fa-2xl" style='color: #000000;'></i> 結果をシェアする
+            <% end %>
+          <% end %>
+          <%= link_to 'マイページで解答履歴を見る', mypage_path, class: 'btn btn-neutral bg-base-100 text-secondary m-15'%>
+        </div>
 
+
+
+        <div class="flex flex-col w-full p-10">
+          <h1 class="text-3xl text-center font-bold mb-3">ランキングTOP20</h1>
+
+          <table class="table-auto w-full border-collapse border border-gray-200">
+            <thead>
+              <tr class="bg-white text-lg">
+                <th class="border border-gray-300 py-2">順位</th>
+                <th class="border border-gray-300 py-2">ユーザー名</th>
+                <th class="border border-gray-300 py-2">正答数</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @rankings.each_with_index do |result, index| %>
+                <tr class="<%= result.id == @current_challenge.id ? 'accent' : 'bg-base-100' %>">
+                  <td class="border border-gray-300 px-4 py-1 text-center"><%= index + 1 %></td>
+                  <td class="border border-gray-300 px-4 py-1"><%= result.user.name %></td>
+                  <td class="border border-gray-300 px-4 py-1 text-center"><%= result.correct_answers %> / <%= result.total_questions %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+        </div>
+
+        <div class="flex flex-row justify-center px-10">
+          <%= link_to 'もう1回やってみる', start_challenge_mode_quizzes_path, class: 'btn text-base-100 font-bold bg-secondary m-10' %>
+        </div>
+        <div class="flex flex-row justify-center space-x30 px-10 mx-8">
+          <%= link_to 'トップページへ戻る', root_path, class: 'btn text-secondary font-bold bg-base-100 mx-20 mt-10 mb-20' %>
+          <%= link_to '全てのランキングを確認する', challenge_mode_ranking_path, class: 'btn text-secondary font-bold bg-base-100 mx-20 mt-10 mb-20' %>
+        </div>
       </div>
-    </div>
 
+
+    </div>
   </div>
 </div>

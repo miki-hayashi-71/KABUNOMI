@@ -4,8 +4,8 @@
 
       <h2 class="text-5xl font-semibold text-center mb-5"><%= @result %></h2>
 
-      <div class="bg-primary rounded-lg text-secondary mb-5">
-        <div class="flex flex-row p-10">
+      <div class="bg-primary rounded-lg text-secondary mb-1">
+        <div class="flex flex-row px-10 pt-5">
           <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は<span class="text-lg font-bold">約<%= @correct_answer %> km</span>です。</p>
         </div>
       </div>
@@ -14,7 +14,7 @@
       <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
 
       <div class="flex justify-center flex-1">
-        <div class="flex flex-row bg-primary rounded-lg text-secondary w-full">
+        <div class="flex bg-primary rounded-lg text-secondary w-full">
           <div class="flex flex-col m-3 p-3 bg-white w-full h-full">
             <p class="text-base font-bold mb-2">ルート</p>
             <div id="map" class="flex-1 w-full" style="height: 100%; width: 100%;"></div>
@@ -25,15 +25,10 @@
       <!-- 外部ファイルからJavaScriptを読み込み -->
       <%= javascript_include_tag 'map.js' %>
 
-    </div>
-  </div>
+      <div class="flex flex-row justify-center px-10">
+        <%= link_to 'もう1回やってみる', new_simple_mode_quiz_path, class: 'btn text-base-100 font-bold bg-secondary mt-10' %>
+      </div>
 
-  <br>
-  <div class="flex justify-end">
-    <div class="menu menu-horizontal space-x-4">
-      <button class="btn btn-primary text-secondary">
-        <%= link_to "他にも比べてみる！", new_simple_mode_quiz_path %>
-      </button>
     </div>
   </div>
 </div>

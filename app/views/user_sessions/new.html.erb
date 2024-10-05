@@ -1,19 +1,30 @@
-<div class="flex flex-col justify-stretch p-10">
-  <div class="p-10 bg-base-100 rounded-lg text-secondary">
-    <h2 class="text-2xl text-text-color mb-8"><%= t('.title')%></h2>
+<div class="flex flex-col min-h-screen bg-base-100">
+  <div class="p-10 bg-base-100">
+    <div class="bg-primary rounded-lg text-secondary">
+      <div class="flex flex-col p-10">
 
-    <%= form_with url: login_path do |f| %>
-      <div class="mb-3">
-        <%= f.label :email, class: "form-label" %>
-        <%= f.email_field :email, class: "form-control" %>
+        <div class="flex flex-col justify-center items-center m-10">
+          <%= form_with url: login_path do |f| %>
+          <h2 class="text-3xl font-bold mb-15"><%= t('.title') %></h2>
+
+          <div class="flex flex-col my-10" style="width: 400px;">
+            <%= f.label :email, class: "form-label mb-2" %>
+            <%= f.email_field :email, class: "form-control w-full" %>
+          </div>
+
+          <div class="flex flex-col my-10" style="width: 400px;">
+            <%= f.label :password, class: "form-label mb-2" %>
+            <%= f.password_field :password, class: "form-control w-full" %>
+          </div>
+
+          <div class="flex justify-center mt-20" style="width: 400px;">
+            <%= f.submit t('user_sessions.new.login'), class: "btn btn-neutral bg-base-100 text-secondary" %>
+          </div>
+
+          <% end %>
+        </div>
+
       </div>
-      <div class="mb-3">
-        <%= f.label :password, class: "form-label" %>
-        <%= f.password_field :password, class: "form-control" %>
-      </div>
-      <div class="my-8">
-        <%= f.submit t('user_sessions.new.login'), class: "btn btn-primary " %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>

@@ -8,44 +8,43 @@
 
       <table class="table-auto w-5/6 border-collapse ml-10">
         <tr>
-          <th scope="row" class="text-left"><%= User.human_attribute_name(:email) %></th>
-          <td class="text-left"><%= current_user.email %></td>
+          <th scope="row" class="text-left py-2"><%= User.human_attribute_name(:email) %></th>
+          <td class="text-left my-2"><%= current_user.email %></td>
         </tr>
         <tr>
-          <th scope="row" class="text-left"><%= User.human_attribute_name(:name) %></th>
-          <td class="text-left"><%= current_user.name %></td>
+          <th scope="row" class="text-left py-2"><%= User.human_attribute_name(:name) %></th>
+          <td class="text-left my-2"><%= current_user.name %></td>
         </tr>
       </table>
 
       <div class="flex justify-center py-10">
-        <button class="btn btn-bg-base-100 text-secondary m-5">
+        <button class="btn btn-neutral base-100 text-secondary m-5">
           <%= link_to "編集", edit_mypage_path %>
         </button>
       </div>
 
-      <!-- クイズ回答履歴表示部分 -->
       <h2 class="text-xl font-bold mb-4">クイズ回答履歴</h2>
       <table class="table-auto w-full border-collapse border border-gray-200">
         <thead>
           <tr class="bg-white text-lg">
-            <th class="border border-gray-300 py-5">日時</th>
-            <th class="border border-gray-300 py-5">地点1</th>
-            <th class="border border-gray-300 py-5">地点2</th>
-            <th class="border border-gray-300 py-5">結果</th>
+            <th class="border border-gray-300 py-2">日時</th>
+            <th class="border border-gray-300 py-2">START</th>
+            <th class="border border-gray-300 py-2">GOAL</th>
+            <th class="border border-gray-300 py-2">結果</th>
           </tr>
         </thead>
         <tbody>
           <% @quiz_histories.each do |history| %>
             <tr class="bg-base-100">
-              <td class="border border-gray-300 px-4 py-2 text-center"><%= history.answered_at.strftime('%Y-%m-%d') %></td>
-              <td class="border border-gray-300 px-4 py-2"><%= history.location1.name %></td>
-              <td class="border border-gray-300 px-4 py-2"><%= history.location2.name %></td>
-              <td class="border border-gray-300 px-4 py-2 text-center"><%= history.is_correct ? '正解' : '不正解' %></td>
+              <td class="border border-gray-300 px-4 py-1 text-center"><%= history.answered_at.strftime('%Y-%m-%d') %></td>
+              <td class="border border-gray-300 px-4 py-1"><%= history.location1.name %></td>
+              <td class="border border-gray-300 px-4 py-1"><%= history.location2.name %></td>
+              <td class="border border-gray-300 px-4 py-1 text-center"><%= history.is_correct ? '正解' : '不正解' %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <%# ページネーション %>
+
       <div class="flex flex-row justify-center py-10">
         <%= paginate @quiz_histories %>
       </div>
