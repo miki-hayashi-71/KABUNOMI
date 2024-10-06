@@ -38,9 +38,9 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     it '全10問の回答後に結果ページに遷移できること' do
       visit new_challenge_mode_quiz_path
       10.times do
-        sleep 1
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        expect(page).to have_button('約500km')
         find('button', text: '約500km').click
-        sleep 1
       end
       expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
     end
@@ -54,14 +54,14 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
     it '正解した場合、履歴が保存されること' do
       click_on '約500km'
-      sleep 1
+      expect(page).to have_current_path(new_challenge_mode_quiz_path)
       expect(QuizHistory.count).to eq(1)
       expect(QuizHistory.last.is_correct).to be true
     end
 
     it '不正解の場合、履歴が保存されること' do
       click_on '約400km'
-      sleep 1
+      expect(page).to have_current_path(new_challenge_mode_quiz_path)
       expect(QuizHistory.count).to eq(1)
       expect(QuizHistory.last.is_correct).to be false
     end
@@ -75,18 +75,20 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
     it '結果発表の画面が正しく表示されること' do
       10.times do
-        sleep 1
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        expect(page).to have_button('約500km')
         find('button', text: '約500km').click
-        sleep 1
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
+      expect(page).to have_current_path(result_challenge_mode_quizzes_path)
     end
 
     it '20位以内にランクインした場合、特別なメッセージが表示されること' do
       10.times do
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        expect(page).to have_button('約500km')
         find('button', text: '約500km').click
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
+      expect(page).to have_current_path(result_challenge_mode_quizzes_path)
       expect(page).to have_content('20位以内にランクインしました🎉')
     end
   end

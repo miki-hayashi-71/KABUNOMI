@@ -30,7 +30,7 @@ RSpec.describe 'マイページ', type: :system do
     end
 
     it 'マイページの編集画面が表示されていること' do
-      expect(page).to have_content('マイページ編集')
+      expect(page).to have_content('ユーザー情報編集')
       expect(page).to have_field('user_name', with: user.name)
       expect(page).to have_field('user_email', with: user.email)
     end

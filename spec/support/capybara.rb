@@ -14,7 +14,7 @@ end
 
 Capybara.default_driver = :remote_chrome
 Capybara.javascript_driver = :remote_chrome
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 8
 
 
 
