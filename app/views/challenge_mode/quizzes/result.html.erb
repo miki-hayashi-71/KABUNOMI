@@ -30,7 +30,7 @@
 
           <table class="table-auto w-full border-collapse border border-gray-200">
             <thead>
-              <tr class="bg-white text-lg">
+              <tr class="bg-accent text-lg">
                 <th class="border border-gray-300 py-2">順位</th>
                 <th class="border border-gray-300 py-2">ユーザー名</th>
                 <th class="border border-gray-300 py-2">正答数</th>
@@ -38,7 +38,7 @@
             </thead>
             <tbody>
               <% @rankings.each_with_index do |result, index| %>
-                <tr class="<%= result.id == @current_challenge.id ? 'accent' : 'bg-base-100' %>">
+                <tr class="<%= result.id == @current_challenge.id ? 'bg-info' : 'bg-base-100' %>">
                   <td class="border border-gray-300 px-4 py-1 text-center"><%= index + 1 %></td>
                   <td class="border border-gray-300 px-4 py-1"><%= result.user.name %></td>
                   <td class="border border-gray-300 px-4 py-1 text-center"><%= result.correct_answers %> / <%= result.total_questions %></td>
