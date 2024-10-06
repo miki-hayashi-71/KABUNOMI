@@ -20,7 +20,7 @@ module.exports = {
         seenceofplace: {
           "primary": "#BFE0CD",
           "secondary": "#7E615B",
-          "accent": "#C6E4EC",
+          "accent": "#FEF7E5",
           "neutral": "#F6F0D0",
           "base-100": "#F6F0D0",
           "info": "#C6E4EC",
