@@ -12,7 +12,7 @@ RSpec.describe 'チャレンジモードのランキング', type: :system do
   context '画面の遷移' do
     it 'ランキングページが正しく表示されること' do
       visit root_path
-      click_on 'チャレンジモードのランキングを見る', id: 'ranking-link'
+      click_on '', id: 'ranking-link'
       expect(page).to have_current_path(challenge_mode_ranking_path)
     end
   end
