@@ -58,6 +58,9 @@ jobs:
           bundle install --jobs 4 --retry 3
           yarn install --frozen-lockfile
 
+      - name: assets precompile # TailwindCSSとdaisyUIを含めたCSSの準備
+        run: bundle exec rake assets:precompile RAILS_ENV=test
+
       - name: Database create and migrate # データベースの作成とマイグレーションを実行
         run: |
           cp config/database.yml.ci config/database.yml
