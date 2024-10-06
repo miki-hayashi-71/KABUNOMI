@@ -4,26 +4,45 @@ on:
   push: # GitHubにpushされた時にワークフローを起動する
 
 jobs:
-  rspec:
+  test:
     runs-on: ubuntu-latest # 実行環境
+
     defaults:
       run:
         working-directory: . # 作業ディレクトリを指定
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} # GitHub Secretsを参照
 
-    steps:
-      - name: Checkout code # GitHubのリポジトリからコードをチェックアウト
-        uses: actions/checkout@v4
+    services:
+      db:
+        image: postgres:13
+        env:
+          POSTGRES_DB: myapp_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        volumes:
+          - postgresql_data:/var/lib/postgresql/data
+
+    steps: # GitHubのリポジトリからコードを取得する。CI環境の初期値はコードが空の状態。
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+          install-chromedriver: true
 
       - name: Set up Ruby # Rubyのセットアップ
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.3 # 使用するRubyのバージョンを指定
-          bundler-cache: true # Bundlerのキャッシュを有効にする
+          bundler-cache: true # Bundlerのキャッシュを有効にする　。前回のキャッシュを再利用することで時間を短縮できる。
 
       - name: Cache node modules # Nodeモジュールをキャッシュ
         uses: actions/cache@v4
@@ -33,15 +52,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-  # 部分一致する最新のキャッシュを探します。
 
-      - name: Bundler and gem install # Bundlerとgemのインストール
+      - name: Install dependencies # Bundlerとgemとyarnのインストール
         run: |
           gem install bundler
-          bundle install
+          bundle install --jobs 4 --retry 3
+          yarn install --frozen-lockfile
+
+      - name: assets precompile # TailwindCSSとdaisyUIを含めたCSSの準備
+        run: bundle exec rake assets:precompile RAILS_ENV=test
 
       - name: Database create and migrate # データベースの作成とマイグレーションを実行
         run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:drop db:create db:migrate RAILS_ENV=test
 
       - name: Run rspec # RSpecを実行
         run: bundle exec rspec
