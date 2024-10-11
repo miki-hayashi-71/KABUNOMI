@@ -87,8 +87,8 @@ module ChallengeMode
         location2_id: @locations[1].id,
         user_answer: @selected_choice,
         correct_answer: @correct_answer,
-        is_correct:,
-        answered_at: Time.current
+        is_correct: is_correct,
+        mode: 'challenge_10'
       )
 
       # セッションの更新
