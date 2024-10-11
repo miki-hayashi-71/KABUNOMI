@@ -6,6 +6,6 @@ FactoryBot.define do
     user_answer { 100 }
     correct_answer { 120 }
     is_correct { false }
-    mode { simple }
+    mode { 'simple' }
   end
 end
