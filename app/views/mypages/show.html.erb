@@ -30,6 +30,7 @@
             <th class="border border-gray-300 py-2">日時</th>
             <th class="border border-gray-300 py-2">START</th>
             <th class="border border-gray-300 py-2">GOAL</th>
+            <th class="border border-gray-300 py-2">距離</th>
             <th class="border border-gray-300 py-2">結果</th>
           </tr>
         </thead>
@@ -39,6 +40,7 @@
               <td class="border border-gray-300 px-4 py-1 text-center"><%= history.created_at.strftime('%Y-%m-%d') %></td>
               <td class="border border-gray-300 px-4 py-1"><%= history.location1.name %></td>
               <td class="border border-gray-300 px-4 py-1"><%= history.location2.name %></td>
+              <td class="border border-gray-300 text-center px-4 py-1"><%= number_with_delimiter(history.correct_answer.to_i) %></td>
               <td class="border border-gray-300 px-4 py-1 text-center"><%= history.is_correct ? '正解' : '不正解' %></td>
             </tr>
           <% end %>
