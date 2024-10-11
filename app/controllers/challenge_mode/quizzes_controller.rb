@@ -85,8 +85,8 @@ module ChallengeMode
         user_id: @current_user.id,
         location1_id: @locations[0].id,
         location2_id: @locations[1].id,
-        user_answer: @selected_choice,
-        correct_answer: @correct_answer,
+        user_answer: @selected_choice.to_i,
+        correct_answer: @correct_answer.to_i,
         is_correct: is_correct,
         mode: 'challenge_10'
       )

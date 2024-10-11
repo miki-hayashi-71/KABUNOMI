@@ -17,7 +17,7 @@ module QuizUtils
 
     # セッションに保存
     session[:locations] = @locations.map(&:id)
-    session[:correct_answer] = @distance
+    session[:correct_answer] = @distance.to_i
     session[:choices] = @choices
   end
 
@@ -36,7 +36,7 @@ module QuizUtils
 
     # APIから帰ってきたdataから必要な情報を取り出し、単位kmに変換する
     distance_in_km = data['rows'][0]['elements'][0]['distance']['value'] / 1000.0
-    distance_in_km.round(1)
+    distance_in_km.round.to_i
   end
 
 
