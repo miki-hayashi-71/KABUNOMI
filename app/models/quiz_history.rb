@@ -7,6 +7,6 @@ class QuizHistory < ApplicationRecord
   validates :user_answer, presence: true, numericality: { greater_than_or_equal_to: 0 } # ユーザーが選択した距離が0以上の数値であること
   validates :correct_answer, presence: true, numericality: { greater_than_or_equal_to: 0 } # 正答の距離が0以上の数値であること
   validates :is_correct, inclusion: { in: [true, false] } # trueかfalse以外は不可
-  validates :answered_at, presence: true
+  validates :mode, presence: true
 
 end

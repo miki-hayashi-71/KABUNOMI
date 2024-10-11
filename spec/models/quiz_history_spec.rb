@@ -40,10 +40,10 @@ RSpec.describe QuizHistory, type: :model do
       expect(quiz_history.errors[:is_correct]).to include('は一覧にありません')
     end
 
-    it 'answered_atがなければ無効であること' do
-      quiz_history = build(:quiz_history, answered_at: nil)
+    it 'modeがなければ無効であること' do
+      quiz_history = build(:quiz_history, mode: nil)
       expect(quiz_history).to be_invalid
-      expect(quiz_history.errors[:answered_at]).to include('を入力してください')
+      expect(quiz_history.errors[:mode]).to include('を入力してください')
     end
   end
 

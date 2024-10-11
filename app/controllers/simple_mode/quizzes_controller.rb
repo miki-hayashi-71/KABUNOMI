@@ -41,7 +41,7 @@ module SimpleMode
           user_answer: @selected_choice,
           correct_answer: @correct_answer,
           is_correct: @selected_choice == @correct_answer,
-          answered_at: Time.current
+          mode: 'simple'
         )
       end
     end

@@ -3,7 +3,7 @@ class MypagesController < ApplicationController
 
   def show
     @quiz_histories = current_user.quiz_histories.includes(:location1, :location2)
-                                  .order(answered_at: :desc)
+                                  .order(created_at: :desc)
                                   .page(params[:page])
   end
 
