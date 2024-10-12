@@ -31,8 +31,12 @@ module ChallengeMode
       @locations = Location.order('RANDOM()').limit(2)
 
       # Javascriptに渡せるように設定
-      gon.location1 = @locations[0]  # 地点1
-      gon.location2 = @locations[1]  # 地点2
+      ## 地点1
+      gon.latitude1 = @locations[0].latitude
+      gon.longitude1 = @locations[0].longitude
+      ## 地点2
+      gon.latitude2 = @locations[1].latitude
+      gon.longitude2 = @locations[1].longitude
 
       # calculate_distanceのメソッドに対して上記で取得した2地点を引数として渡す
       @distance = calculate_distance(@locations[0], @locations[1])
