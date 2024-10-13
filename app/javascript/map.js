@@ -1,5 +1,12 @@
 // 地図の初期化
 function initMap(){
+  // Google Maps APIが読み込まれているか確認
+  if (typeof google.maps === 'undefined') {
+    window.alert('APIの準備ができていません。');
+    setTimeout(initMap, 500);
+    return;
+  }
+
   const directionsService = new google.maps.DirectionsService();  // 指定された出発地点から到着地点までの経路情報を取得するサービス
   const directionsRenderer = new google.maps.DirectionsRenderer();  // 取得した経路情報を地図上に表示するためのレンダラー
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -31,4 +38,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     .catch((e) => window.alert("Directions request failed due to " + e));  // 失敗した時にエラー内容をアラートで表示
 }
 
-initMap();
+// ページが完全にロードされてinitMapを実行
+window.onload = function() {
+  initMap();
+};
