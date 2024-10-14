@@ -1,5 +1,6 @@
 module ChallengeMode
   class QuizzesController < ApplicationController
+
     # QuizUtilsモジュール（calculate_distanceメソッド、generate_choicesメソッド）
     include QuizUtils
 
@@ -30,24 +31,17 @@ module ChallengeMode
       # ランダムに並び替え、そのうち2件を取得する
       @locations = Location.order('RANDOM()').limit(2)
 
-      # Javascriptに渡せるように設定
-      ## 地点1
-      gon.latitude1 = @locations[0].latitude
-      gon.longitude1 = @locations[0].longitude
-      ## 地点2
-      gon.latitude2 = @locations[1].latitude
-      gon.longitude2 = @locations[1].longitude
-
       # calculate_distanceのメソッドに対して上記で取得した2地点を引数として渡す
       @distance = calculate_distance(@locations[0], @locations[1])
 
       # generate_choicesメソッドにAPIで計算した正答な距離を引数として@choicesに代入
       @choices = generate_choices(@distance)
 
-      # セッションに保存
-      session[:locations] = @locations.map(&:id)
-      session[:correct_answer] = @distance
-      session[:choices] = @choices
+      # 地図表示のためにgonへ変換（quiz_utils参照）
+      set_gon_locations(@locations)
+
+      # セッションに保存（quiz_utils参照）
+      set_session_data(@locations, @distance, @choices)
 
       # 出題カウントを増やす
       challenge[:current_question] += 1
@@ -63,37 +57,21 @@ module ChallengeMode
       @correct_answer = session[:correct_answer].to_i
       @selected_choice = params[:selected_choice].to_i
 
-      # # JavaScriptに渡せるように設定
-      # ## 地点1
-      # gon.latitude1 = @locations[0].latitude
-      # gon.longitude1 = @locations[0].longitude
-      # ## 地点2
-      # gon.latitude2 = @locations[1].latitude
-      # gon.longitude2 = @locations[1].longitude
-
       # 正誤判定
-      is_correct = @selected_choice == @correct_answer
+      @is_correct = @selected_choice == @correct_answer
 
       # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
-      @result = if is_correct
+      @result = if @is_correct
                   t('quizzes.show.correct')
                 else
                   t('quizzes.show.incorrect')
                 end
 
       # 正解の場合、正解数をカウントアップ
-      challenge[:correct_answers] += 1 if is_correct
+      challenge[:correct_answers] += 1 if @is_correct
 
-      # 回答履歴を保存
-      QuizHistory.create!(
-        user_id: @current_user.id,
-        location1_id: @locations[0].id,
-        location2_id: @locations[1].id,
-        user_answer: @selected_choice.to_i,
-        correct_answer: @correct_answer.to_i,
-        is_correct: is_correct,
-        mode: 'challenge_10'
-      )
+      # ログインしている場合にのみ回答履歴を保存
+      save_quiz_history('challenge_10') if @current_user
 
       # セッションの更新
       session[:challenge_mode] = challenge
@@ -147,9 +125,6 @@ module ChallengeMode
                   .page(params[:page])
     end
 
-    # private
-    # Quiz_Utilsにcalculate_distanceメソッドのモジュール
-    # Quiz_Utilsにgenerate_choicesメソッドのモジュール
 
   end
 end

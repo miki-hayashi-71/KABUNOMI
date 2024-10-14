@@ -33,6 +33,11 @@
       <%= render 'shared/flash_message' %>
       <%= yield %>
     </div>
+    <!-- quizzes コントローラーの new または show アクションでのみ Google Maps API を読み込む -->
+    <% if controller_name == "quizzes" && (action_name == "new" || action_name == "show") %>
+      <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAPS_JAVASCRIPT_API'] %>&language=ja&callback=initMap" async defer></script>
+      <%= javascript_include_tag 'map.js' %>
+    <% end %>
   </body>
 
   <%= render 'shared/footer' %>
