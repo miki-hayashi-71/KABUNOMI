@@ -10,6 +10,14 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     allow_any_instance_of(QuizUtils).to receive(:generate_choices).and_return([500, 600, 400])
     # モック: ランダムで2地点を取得する部分
     allow(Location).to receive_message_chain(:order, :limit).and_return([location1, location2])
+    # CI環境のみアラートを処理
+    if ENV['CODEBUILD_BUILD_ID']
+      begin
+        page.driver.browser.switch_to.alert.dismiss
+      rescue Selenium::WebDriver::Error::NoSuchAlertError
+        # アラートがなければ無視する
+      end
+    end
   end
 
   context 'クイズの表示と回答' do
