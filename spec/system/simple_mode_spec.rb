@@ -20,7 +20,7 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     end
   end
 
-  context 'クイズの表示と回答' do
+  context 'クイズの表示と回答', js: true do
     before do
       visit new_simple_mode_quiz_path
     end
@@ -43,7 +43,7 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     end
   end
 
-  context 'ログイン済みユーザーのクイズ履歴の保存' do
+  context 'ログイン済みユーザーのクイズ履歴の保存', js: true do
     let!(:user) { FactoryBot.create(:user) }
 
     before do

@@ -21,7 +21,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
   end
 
-  context '画面の遷移と表示確認' do
+  context '画面の遷移と表示確認', js: true do
     before do
       login_as(user)
     end
@@ -55,7 +55,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
   end
 
-  context 'クイズの履歴保存' do
+  context 'クイズの履歴保存', js: true do
     before do
       login_as(user)
       visit new_challenge_mode_quiz_path
@@ -76,7 +76,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
   end
 
-  context '結果とランキングの表示' do
+  context '結果とランキングの表示', js: true do
     before do
       login_as(user)
       visit new_challenge_mode_quiz_path
@@ -102,7 +102,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
   end
 
-  context 'ユーザー権限に基づく表示' do
+  context 'ユーザー権限に基づく表示', js: true do
     it 'ログインしていないユーザーがチャレンジモードにアクセスできないこと' do
       visit logout_path
       visit start_challenge_mode_quizzes_path
