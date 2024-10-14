@@ -8,7 +8,22 @@ module SimpleMode
     before_action :set_user_if_logged_in
 
 
-    # def new ;end #Quiz_Utilsにnewメソッドのモジュール
+    def new
+      # ランダムに並び替え、そのうち2件を取得する
+      @locations = Location.order('RANDOM()').limit(2)
+
+      # calculate_distanceのメソッド（quiz_utils参照）に対して上記で取得した2地点を引数として渡す
+      @distance = calculate_distance(@locations[0], @locations[1])
+
+      # generate_choicesメソッド（quiz_utils参照）にAPIで計算した正答な距離を引数として@choicesに代入
+      @choices = generate_choices(@distance)
+
+      # 地図表示のためにgonへ変換（quiz_utils参照）
+      set_gon_locations(@locations)
+
+      # セッションに保存（quiz_utils参照）
+      set_session_data(@locations, @distance, @choices)
+    end
 
 
     def show
@@ -17,39 +32,23 @@ module SimpleMode
       @correct_answer = session[:correct_answer].to_i
       @selected_choice = params[:selected_choice].to_i
 
-      # JavaScriptに渡せるように設定
-      ## 地点1
-      gon.latitude1 = @locations[0].latitude
-      gon.longitude1 = @locations[0].longitude
-      ## 地点2
-      gon.latitude2 = @locations[1].latitude
-      gon.longitude2 = @locations[1].longitude
+      # 正誤判定
+      @is_correct = @selected_choice == @correct_answer
 
       # ユーザーが選んだ回答が正解か判断し、その結果をインスタンス変数に代入する
-      @result = if @selected_choice == @correct_answer
+      @result = if @is_correct
                   t('quizzes.show.correct')
                 else
                   t('quizzes.show.incorrect')
                 end
 
+      # 地図表示のためにgonへ変換（quiz_utils参照）
+      set_gon_locations(@locations)
+
       # ログインしている場合にのみ回答履歴を保存
-      if @current_user
-        QuizHistory.create!(
-          user_id: @current_user.id,
-          location1_id: @locations[0].id,
-          location2_id: @locations[1].id,
-          user_answer: @selected_choice.to_i,
-          correct_answer: @correct_answer.to_i,
-          is_correct: @selected_choice == @correct_answer,
-          mode: 'simple'
-        )
-      end
+      save_quiz_history('simple') if @current_user
     end
 
-
-    # private
-    # Quiz_Utilsにcalculate_distanceメソッドのモジュール
-    # Quiz_Utilsにgenerate_choicesメソッドのモジュール
 
   end
 end

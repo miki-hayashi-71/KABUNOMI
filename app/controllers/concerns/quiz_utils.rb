@@ -1,31 +1,13 @@
 module QuizUtils
   extend ActiveSupport::Concern # privateのメソッドをinclude先でもprivateにするために必要
 
-  def new
-    # ランダムに並び替え、そのうち2件を取得する
-    @locations = Location.order('RANDOM()').limit(2)
+  private
 
-    # JavaScriptに渡せるように設定
-    ## 地点1
-    gon.latitude1 = @locations[0].latitude
-    gon.longitude1 = @locations[0].longitude
-    ## 地点2
-    gon.latitude2 = @locations[1].latitude
-    gon.longitude2 = @locations[1].longitude
-
-    # calculate_distanceのメソッドに対して上記で取得した2地点を引数として渡す
-    @distance = calculate_distance(@locations[0], @locations[1])
-
-    # generate_choicesメソッドにAPIで計算した正答な距離を引数として@choicesに代入
-    @choices = generate_choices(@distance)
-
-    # セッションに保存
-    session[:locations] = @locations.map(&:id)
-    session[:correct_answer] = @distance.to_i
-    session[:choices] = @choices
+  # ログイン中のユーザーをセット
+  def set_user_if_logged_in
+    @current_user = current_user if logged_in?
   end
 
-  private
 
   # 距離計算ロジック
   def calculate_distance(location1, location2)
@@ -69,8 +51,36 @@ module QuizUtils
   end
 
 
-  # ログイン中のユーザーをセット
-  def set_user_if_logged_in
-    @current_user = current_user if logged_in?
+  # 地図表示のため、JavaScriptに渡せるように設定
+  def set_gon_locations(locations)
+    ## 地点1
+    gon.latitude1 = @locations[0].latitude
+    gon.longitude1 = @locations[0].longitude
+    ## 地点2
+    gon.latitude2 = @locations[1].latitude
+    gon.longitude2 = @locations[1].longitude
   end
+
+
+  # セッションに保存する
+  def set_session_data(locations, distance, choices)
+    session[:locations] = locations.map(&:id)
+    session[:correct_answer] = distance.to_i
+    session[:choices] = choices
+  end
+
+
+  # 回答履歴を保存する
+  def save_quiz_history(mode)
+    QuizHistory.create!(
+      user_id: @current_user.id,
+      location1_id: @locations[0].id,
+      location2_id: @locations[1].id,
+      user_answer: @selected_choice,
+      correct_answer: @correct_answer,
+      is_correct: @is_correct,
+      mode: mode
+    )
+  end
+
 end

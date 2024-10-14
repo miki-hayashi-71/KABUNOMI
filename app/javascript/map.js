@@ -1,44 +1,47 @@
 // 地図の初期化
 function initMap(){
-  // Google Maps APIが読み込まれているか確認
-  if (typeof google.maps === 'undefined') {
-    window.alert('APIの準備ができていません。');
-    setTimeout(initMap, 500);
-    return;
+  // gonの値が存在しているかを確認
+  if (!gon.latitude1 || !gon.longitude1 || !gon.latitude2 || !gon.longitude2) {
+    console.error("gonオブジェクトの値が不足しています。");
+    window.alert("地図の初期化に必要な情報が不足しています。");
+    return;  // 処理を中断
   }
+  const mapCenter = { lat: gon.latitude1, lng: gon.longitude1 }; // 地点1を地図の中心に設定
+  const map = createMap(mapCenter);
 
-  const directionsService = new google.maps.DirectionsService();  // 指定された出発地点から到着地点までの経路情報を取得するサービス
-  const directionsRenderer = new google.maps.DirectionsRenderer();  // 取得した経路情報を地図上に表示するためのレンダラー
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 7,
-    center: { lat: gon.latitude1, lng: gon.longitude1 }, // 地点1を地図の中心に設定
-  });
-
+  const directionsService = new google.maps.DirectionsService(); // 指定された出発地点から到着地点までの経路情報を取得する
+  const directionsRenderer = new google.maps.DirectionsRenderer();  // 取得した経路情報を地図上に表示する
   directionsRenderer.setMap(map);
 
-  calculateAndDisplayRoute(directionsService, directionsRenderer);  // 出発地点と到着地点を設定して経路を表示する関数
+  displayRoute(directionsService, directionsRenderer, mapCenter, { lat: gon.latitude2, lng: gon.longitude2 });
 }
 
-function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-  directionsService  // 経路計算のリクエストを行うオブジェクト
-    .route({  // 下記の条件に基づいて経路を計算するリクエストをAPIに送信するメソッド
-      origin: {
-        lat: gon.latitude1, // 地点1
-        lng: gon.longitude1
-      },
-      destination: {
-        lat: gon.latitude2, // 地点2
-        lng: gon.longitude2
-      },
-      travelMode: google.maps.TravelMode.DRIVING,  // 移動手段
-    })
-    .then((response) => {  // 計算に成功したときに実行。地点1から地点2までの経路を地図上に表示
-      directionsRenderer.setDirections(response);
-    })
-    .catch((e) => window.alert("Directions request failed due to " + e));  // 失敗した時にエラー内容をアラートで表示
+// 地図を作成する関数
+function createMap(center) {
+  return new google.maps.Map(document.getElementById("map"), {
+    zoom: 7,
+    center: center,
+  });
 }
 
-// ページが完全にロードされてinitMapを実行
-window.onload = function() {
-  initMap();
-};
+// 経路を計算して表示する関数
+function displayRoute(directionsService, directionsRenderer, origin, destination) {
+  directionsService.route({
+    origin: origin,  // 出発地点
+    destination: destination,  // 到着地点
+    travelMode: google.maps.TravelMode.DRIVING,  // 移動手段
+  })
+  .then((response) => {
+    directionsRenderer.setDirections(response);  // 経路を表示
+  })
+  .catch((e) => routeError(e));  // エラーハンドリング
+}
+
+// 経路リクエストのエラーを処理する関数
+function routeError(error) {
+  console.error("Directions request failed", error);  // エラーをコンソールに表示
+  window.alert("経路の取得に失敗しました。もう一度お試しください。");  // ユーザー向けのアラート
+}
+
+// ページが完全にロードされたらinitMapを実行
+window.onload = initMap;

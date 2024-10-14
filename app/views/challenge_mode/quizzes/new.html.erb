@@ -19,9 +19,6 @@
         </div>
       </div>
 
-      <!-- Google Maps API を読み込む -->
-      <script src="https://maps.googleapis.com/maps/api/js?key=<%= "#{ENV['MAPS_JAVASCRIPT_API']}" %>&language=ja&callback=initMap" async defer></script>
-
       <div class="flex justify-center flex-1">
         <div class="flex bg-primary rounded-lg text-secondary w-full">
           <div class="flex flex-col m-3 p-3 bg-white w-full h-full">
@@ -30,9 +27,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 外部ファイルからJavaScriptを読み込み -->
-      <%= javascript_include_tag 'map.js' %>
 
     </div>
   </div>
