@@ -15,7 +15,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     if ENV['CODEBUILD_BUILD_ID']
       begin
         page.driver.browser.switch_to.alert.dismiss
-      rescue Selenium::WebDriver::Error::NoSuchAlertError
+      rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
         # アラートがなければ無視する
       end
     end
