@@ -15,6 +15,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
   context '画面の遷移と表示確認', js: true do
     before do
+      Capybara.reset_sessions!
       login_as(user)
     end
 
@@ -41,7 +42,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
         find('button', text: '約500km', wait: 5).click
         expect(page).to have_current_path(new_challenge_mode_quiz_path)
       end
-    end
+    end 
 
     it '全10問の回答後に結果ページに遷移できること' do
       handle_unexpected_alert do
@@ -85,6 +86,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
   context '結果とランキングの表示', js: true do
     before do
+      Capybara.reset_sessions! 
       login_as(user)
       visit new_challenge_mode_quiz_path
     end
