@@ -13,13 +13,15 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     allow(Location).to receive_message_chain(:order, :limit).and_return([location1, location2])
 
     # アラートが表示された場合
-    begin
-      # アラートが表示されている場合のみ処理を行う
-      page.driver.browser.switch_to.alert.accept
-      # アラートが存在しない場合は何もしない
-      rescue Selenium::WebDriver::Error::NoSuchAlertError
-      # 予期しないアラートが開いた場合何もしない
-      rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
+    if ENV['CODEBUILD_BUILD_ID'].present?
+      begin
+        # アラートが表示されている場合のみ処理を行う
+        page.driver.browser.switch_to.alert.accept
+        # アラートが存在しない場合は何もしない
+        rescue Selenium::WebDriver::Error::NoSuchAlertError
+        # 予期しないアラートが開いた場合何もしない
+        rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
+      end
     end
   end
 
