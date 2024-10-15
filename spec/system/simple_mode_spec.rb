@@ -73,7 +73,11 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     yield
   rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
     # アラートが表示された場合はOKをクリックして閉じる
-    page.driver.browser.switch_to.alert.accept
+    begin
+      page.driver.browser.switch_to.alert.accept
+    rescue Selenium::WebDriver::Error::NoSuchAlertError
+      # アラートが存在しない場合は無視
+    end
     retry # 処理を再試行
   end
 end

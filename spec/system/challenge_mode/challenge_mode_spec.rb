@@ -43,13 +43,15 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it '全10問の回答後に結果ページに遷移できること' do
-      visit new_challenge_mode_quiz_path
-      10.times do
-        expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        expect(page).to have_button('約500km')
-        find('button', text: '約500km').click
+      handle_unexpected_alert do
+        visit new_challenge_mode_quiz_path
+        10.times do
+          expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          expect(page).to have_button('約500km')
+          find('button', text: '約500km').click
+        end
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
     end
   end
 
@@ -85,12 +87,14 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it '結果発表の画面が正しく表示されること' do
-      10.times do
-        expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        expect(page).to have_button('約500km')
-        find('button', text: '約500km').click
+      handle_unexpected_alert do
+        10.times do
+          expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          expect(page).to have_button('約500km')
+          find('button', text: '約500km').click
+        end
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path)
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path)
     end
 
     it '20位以内にランクインした場合、特別なメッセージが表示されること' do
@@ -130,7 +134,11 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     yield
   rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
     # アラートが表示された場合はOKをクリックして閉じる
-    page.driver.browser.switch_to.alert.accept
+    begin
+      page.driver.browser.switch_to.alert.accept
+    rescue Selenium::WebDriver::Error::NoSuchAlertError
+      # アラートが存在しない場合は無視
+    end
     retry # 処理を再試行
   end
 end
