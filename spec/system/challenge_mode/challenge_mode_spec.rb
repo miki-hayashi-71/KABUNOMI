@@ -11,13 +11,15 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     allow_any_instance_of(QuizUtils).to receive(:generate_choices).and_return([500, 600, 400])
     # モック: ランダムで2地点を取得する部分
     allow(Location).to receive_message_chain(:order, :limit).and_return([location1, location2])
-    # CI環境のみアラートを処理
-    if ENV['CODEBUILD_BUILD_ID']
-      begin
-        page.driver.browser.switch_to.alert.dismiss
+
+    # アラートが表示された場合
+    begin
+      # アラートが表示されている場合のみ処理を行う
+      page.driver.browser.switch_to.alert.accept
+      # アラートが存在しない場合は何もしない
+      rescue Selenium::WebDriver::Error::NoSuchAlertError
+      # 予期しないアラートが開いた場合何もしない
       rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
-        # アラートがなければ無視する
-      end
     end
   end
 
@@ -102,7 +104,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
   end
 
-  context 'ユーザー権限に基づく表示', js: true do
+  context 'ユーザー権限に基づく表示' do
     it 'ログインしていないユーザーがチャレンジモードにアクセスできないこと' do
       visit logout_path
       visit start_challenge_mode_quizzes_path
