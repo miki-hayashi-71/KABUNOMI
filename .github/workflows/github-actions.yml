@@ -68,3 +68,10 @@ jobs:
 
       - name: Run rspec # RSpecを実行
         run: bundle exec rspec
+
+      - name: Archive rspec result screenshots # RSpecに失敗した時のスクリーンショットを追加
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec result screenshots
+          path: tmp/capybara/
