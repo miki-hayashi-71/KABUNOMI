@@ -37,6 +37,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     it '解答の選択後、次の問題に進むこと' do
       handle_unexpected_alert do
         visit new_challenge_mode_quiz_path
+        sleep 2
         find('button', text: '約500km', wait: 5).click
         expect(page).to have_current_path(new_challenge_mode_quiz_path)
       end
@@ -45,8 +46,10 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     it '全10問の回答後に結果ページに遷移できること' do
       handle_unexpected_alert do
         visit new_challenge_mode_quiz_path
+        sleep 2
         10.times do
           expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          sleep 2
           expect(page).to have_button('約500km')
           find('button', text: '約500km').click
         end
@@ -90,6 +93,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
       handle_unexpected_alert do
         10.times do
           expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          sleep 2
           expect(page).to have_button('約500km')
           find('button', text: '約500km').click
         end
@@ -101,10 +105,12 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
       handle_unexpected_alert do
         10.times do
           expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          sleep 2
           expect(page).to have_button('約500km')
           find('button', text: '約500km').click
         end
         expect(page).to have_current_path(result_challenge_mode_quizzes_path)
+        sleep 2
         expect(page).to have_content('20位以内にランクインしました🎉')
       end
     end
