@@ -10,19 +10,6 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     allow_any_instance_of(QuizUtils).to receive(:generate_choices).and_return([500, 600, 400])
     # モック: ランダムで2地点を取得する部分
     allow(Location).to receive_message_chain(:order, :limit).and_return([location1, location2])
-
-    # アラートが表示された場合
-    if ENV['CODEBUILD_BUILD_ID'].present?
-      begin
-        # アラートが表示されている場合のみ処理を行う
-        page.driver.browser.switch_to.alert.accept
-        # アラートが存在しない場合は何もしない
-        rescue Selenium::WebDriver::Error::NoSuchAlertError
-        # 予期しないアラートが開いた場合何もしない
-        rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
-        page.driver.browser.switch_to.alert.accept
-      end
-    end
   end
 
   context 'クイズの表示と回答', js: true do
@@ -31,20 +18,26 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     end
 
     it 'クイズページに正しい情報が表示されること' do
-      expect(page).to have_content('東京から大阪までの距離は何kmあるでしょう？')
-      expect(page).to have_button('約500km')
-      expect(page).to have_button('約600km')
-      expect(page).to have_button('約400km')
+      handle_unexpected_alert do
+        expect(page).to have_content('東京から大阪までの距離は何kmあるでしょう？')
+        expect(page).to have_button('約500km')
+        expect(page).to have_button('約600km')
+        expect(page).to have_button('約400km')
+      end
     end
 
     it '正解の選択肢を選んだ場合、正解メッセージが表示されること' do
-      click_on '約500km'
-      expect(page).to have_content('正解！')
+      handle_unexpected_alert do
+        click_on '約500km'
+        expect(page).to have_content('正解！')
+      end
     end
 
     it '不正解の選択肢を選んだ場合、不正解メッセージが表示されること' do
-      click_on '約400km'
-      expect(page).to have_content('不正解！')
+      handle_unexpected_alert do
+        click_on '約400km'
+        expect(page).to have_content('不正解！')
+      end
     end
   end
 
@@ -57,17 +50,30 @@ RSpec.describe 'シンプルモードクイズ', type: :system do
     end
 
     it '正解した場合、履歴が保存されること' do
-      click_on '約500km'
-      expect(QuizHistory.count).to eq(1)
-      history = QuizHistory.last
-      expect(history.is_correct).to be true
+      handle_unexpected_alert do
+        click_on '約500km'
+        expect(QuizHistory.count).to eq(1)
+        history = QuizHistory.last
+        expect(history.is_correct).to be true
+      end
     end
 
     it '不正解の場合、履歴が保存されること' do
-      click_on '約400km'
-      expect(QuizHistory.count).to eq(1)
-      history = QuizHistory.last
-      expect(history.is_correct).to be false
+      handle_unexpected_alert do
+        click_on '約400km'
+        expect(QuizHistory.count).to eq(1)
+        history = QuizHistory.last
+        expect(history.is_correct).to be false
+      end
     end
+  end
+
+  # アラートを検知して処理するヘルパー
+  def handle_unexpected_alert
+    yield
+  rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
+    # アラートが表示された場合はOKをクリックして閉じる
+    page.driver.browser.switch_to.alert.accept
+    retry # 処理を再試行
   end
 end

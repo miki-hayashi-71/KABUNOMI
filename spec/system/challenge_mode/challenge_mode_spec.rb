@@ -11,18 +11,6 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     allow_any_instance_of(QuizUtils).to receive(:generate_choices).and_return([500, 600, 400])
     # モック: ランダムで2地点を取得する部分
     allow(Location).to receive_message_chain(:order, :limit).and_return([location1, location2])
-
-    # アラートが表示された場合
-    if ENV['CODEBUILD_BUILD_ID'].present?
-      begin
-        # アラートが表示されている場合のみ処理を行う
-        page.driver.browser.switch_to.alert.accept
-        # アラートが存在しない場合は何もしない
-        rescue Selenium::WebDriver::Error::NoSuchAlertError
-        # 予期しないアラートが開いた場合何もしない
-        rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
-      end
-    end
   end
 
   context '画面の遷移と表示確認', js: true do
@@ -31,31 +19,39 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it 'トップページからクイズ開始画面に遷移できること' do
-      visit root_path
-      click_on 'チャレンジモードに挑戦！', id: 'challenge_mode-link'
-      expect(page).to have_current_path(start_challenge_mode_quizzes_path)
+      handle_unexpected_alert do
+        visit root_path
+        click_on 'チャレンジモードに挑戦！', id: 'challenge_mode-link'
+        expect(page).to have_current_path(start_challenge_mode_quizzes_path)
+      end
     end
 
     it 'クイズ開始画面からクイズ出題画面に遷移できること' do
-      visit start_challenge_mode_quizzes_path
-      click_on 'クイズを開始する', id: 'new_quiz-link'
-      expect(page).to have_current_path(new_challenge_mode_quiz_path)
+      handle_unexpected_alert do
+        visit start_challenge_mode_quizzes_path
+        click_on 'クイズを開始する', id: 'new_quiz-link'
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+      end
     end
 
     it '解答の選択後、次の問題に進むこと' do
-      visit new_challenge_mode_quiz_path
-      find('button', text: '約500km', wait: 5).click
-      expect(page).to have_current_path(new_challenge_mode_quiz_path)
+      handle_unexpected_alert do
+        visit new_challenge_mode_quiz_path
+        find('button', text: '約500km', wait: 5).click
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+      end
     end
 
     it '全10問の回答後に結果ページに遷移できること' do
-      visit new_challenge_mode_quiz_path
-      10.times do
-        expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        expect(page).to have_button('約500km')
-        find('button', text: '約500km').click
+      handle_unexpected_alert do
+        visit new_challenge_mode_quiz_path
+        10.times do
+          expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          expect(page).to have_button('約500km')
+          find('button', text: '約500km').click
+        end
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
     end
   end
 
@@ -66,17 +62,21 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it '正解した場合、履歴が保存されること' do
-      click_on '約500km'
-      expect(page).to have_current_path(new_challenge_mode_quiz_path)
-      expect(QuizHistory.count).to eq(1)
-      expect(QuizHistory.last.is_correct).to be true
+      handle_unexpected_alert do
+        click_on '約500km'
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        expect(QuizHistory.count).to eq(1)
+        expect(QuizHistory.last.is_correct).to be true
+      end
     end
 
     it '不正解の場合、履歴が保存されること' do
-      click_on '約400km'
-      expect(page).to have_current_path(new_challenge_mode_quiz_path)
-      expect(QuizHistory.count).to eq(1)
-      expect(QuizHistory.last.is_correct).to be false
+      handle_unexpected_alert do
+        click_on '約400km'
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        expect(QuizHistory.count).to eq(1)
+        expect(QuizHistory.last.is_correct).to be false
+      end
     end
   end
 
@@ -87,37 +87,54 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it '結果発表の画面が正しく表示されること' do
-      10.times do
-        expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        expect(page).to have_button('約500km')
-        find('button', text: '約500km').click
+      handle_unexpected_alert do
+        10.times do
+          expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          expect(page).to have_button('約500km')
+          find('button', text: '約500km').click
+        end
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path)
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path)
     end
 
     it '20位以内にランクインした場合、特別なメッセージが表示されること' do
-      10.times do
-        expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        expect(page).to have_button('約500km')
-        find('button', text: '約500km').click
+      handle_unexpected_alert do
+        10.times do
+          expect(page).to have_current_path(new_challenge_mode_quiz_path)
+          expect(page).to have_button('約500km')
+          find('button', text: '約500km').click
+        end
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path)
+        expect(page).to have_content('20位以内にランクインしました🎉')
       end
-      expect(page).to have_current_path(result_challenge_mode_quizzes_path)
-      expect(page).to have_content('20位以内にランクインしました🎉')
     end
   end
 
   context 'ユーザー権限に基づく表示' do
     it 'ログインしていないユーザーがチャレンジモードにアクセスできないこと' do
-      visit logout_path
-      visit start_challenge_mode_quizzes_path
-      expect(page).to have_current_path(login_path)
-      expect(page).to have_content('ログインが必要です')
+      handle_unexpected_alert do
+        visit logout_path
+        visit start_challenge_mode_quizzes_path
+        expect(page).to have_current_path(login_path)
+        expect(page).to have_content('ログインが必要です')
+      end
     end
 
     it 'ログイン済みユーザーはチャレンジモードにアクセスできること' do
-      login_as(user)
-      visit start_challenge_mode_quizzes_path
-      expect(page).to have_current_path(start_challenge_mode_quizzes_path)
+      handle_unexpected_alert do
+        login_as(user)
+        visit start_challenge_mode_quizzes_path
+        expect(page).to have_current_path(start_challenge_mode_quizzes_path)
+      end
     end
+  end
+
+  # アラートを検知して処理するヘルパー
+  def handle_unexpected_alert
+    yield
+  rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError
+    # アラートが表示された場合はOKをクリックして閉じる
+    page.driver.browser.switch_to.alert.accept
+    retry # 処理を再試行
   end
 end
