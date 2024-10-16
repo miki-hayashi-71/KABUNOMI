@@ -36,18 +36,21 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     end
 
     it '解答の選択後、次の問題に進むこと' do
+      visit start_challenge_mode_quizzes_path
+      click_on 'クイズを開始する', id: 'new_quiz-link'
       handle_unexpected_alert do
         visit new_challenge_mode_quiz_path
         sleep 2
         find('button', text: '約500km', wait: 5).click
         expect(page).to have_current_path(new_challenge_mode_quiz_path)
       end
-    end 
+    end
 
     it '全10問の回答後に結果ページに遷移できること' do
+      visit start_challenge_mode_quizzes_path
+      click_on 'クイズを開始する', id: 'new_quiz-link'
       handle_unexpected_alert do
         visit new_challenge_mode_quiz_path
-        sleep 2
         10.times do
           expect(page).to have_current_path(new_challenge_mode_quiz_path)
           sleep 2
@@ -86,9 +89,10 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
   context '結果とランキングの表示', js: true do
     before do
-      Capybara.reset_sessions! 
+      Capybara.reset_sessions!
       login_as(user)
-      visit new_challenge_mode_quiz_path
+      visit start_challenge_mode_quizzes_path
+      click_on 'クイズを開始する', id: 'new_quiz-link'
     end
 
     it '結果発表の画面が正しく表示されること' do
