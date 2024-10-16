@@ -39,9 +39,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
       visit start_challenge_mode_quizzes_path
       click_on 'クイズを開始する', id: 'new_quiz-link'
       handle_unexpected_alert do
-        visit new_challenge_mode_quiz_path
         expect(page).to have_current_path(new_challenge_mode_quiz_path)
-        sleep 2
         find('button', text: '約500km', wait: 5).click
         expect(page).to have_current_path(new_challenge_mode_quiz_path)
       end
