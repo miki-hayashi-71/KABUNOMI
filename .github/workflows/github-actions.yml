@@ -40,7 +40,7 @@ jobs:
       - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v1
         with:
-          version: 129.0.6668.89 # Chromeのバージョンに対応するChromeDriverを指定
+          chromedriver-version: 129.0.6668.89 # Chromeのバージョンに対応するChromeDriverを指定
 
       - name: Set up Ruby # Rubyのセットアップ
         uses: ruby/setup-ruby@v1
