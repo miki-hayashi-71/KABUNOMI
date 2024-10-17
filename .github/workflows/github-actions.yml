@@ -32,6 +32,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install fonts-noto # 日本語フォントのインストール
+        run: sudo apt install fonts-noto
+
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
         with:
