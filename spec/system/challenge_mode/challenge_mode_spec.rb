@@ -49,15 +49,60 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
       visit start_challenge_mode_quizzes_path
       click_on 'クイズを開始する', id: 'new_quiz-link'
       handle_unexpected_alert do
-        10.times do
-          expect(page).to have_current_path(new_challenge_mode_quiz_path)
-          sleep 1
-          expect(page).to have_button('約500km')
-          find('button', text: '約500km').click
-        end
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
         expect(page).to have_current_path(result_challenge_mode_quizzes_path, ignore_query: true)
       end
     end
+
   end
 
   context 'クイズの履歴保存', js: true do
@@ -95,26 +140,113 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
 
     it '結果発表の画面が正しく表示されること' do
       handle_unexpected_alert do
-        10.times do
-          expect(page).to have_current_path(new_challenge_mode_quiz_path)
-          sleep 1
-          expect(page).to have_button('約500km')
-          find('button', text: '約500km').click
-        end
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
         expect(page).to have_current_path(result_challenge_mode_quizzes_path)
       end
     end
 
     it '20位以内にランクインした場合、特別なメッセージが表示されること' do
       handle_unexpected_alert do
-        10.times do
-          expect(page).to have_current_path(new_challenge_mode_quiz_path)
-          sleep 1
-          expect(page).to have_button('約500km')
-          find('button', text: '約500km').click
-        end
-        expect(page).to have_current_path(result_challenge_mode_quizzes_path)
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
         sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(new_challenge_mode_quiz_path)
+        sleep 1
+        expect(page).to have_button('約500km')
+        find('button', text: '約500km').click
+
+        expect(page).to have_current_path(result_challenge_mode_quizzes_path)
         expect(page).to have_content('20位以内にランクインしました🎉')
       end
     end
