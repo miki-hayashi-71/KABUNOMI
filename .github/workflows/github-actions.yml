@@ -32,10 +32,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install fonts-noto # 日本語フォントのインストール
+        run: sudo apt install fonts-noto
+
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: stable
+          chrome-version: 129.0.6668.100
           install-chromedriver: true
 
       - name: Set up Ruby # Rubyのセットアップ
@@ -68,3 +71,10 @@ jobs:
 
       - name: Run rspec # RSpecを実行
         run: bundle exec rspec
+
+      - name: Archive rspec result screenshots # RSpecに失敗した時のスクリーンショットを追加
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec result screenshots
+          path: tmp/capybara/
