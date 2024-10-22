@@ -4,6 +4,7 @@
       <div class="flex flex-col p-10">
 
         <div class="flex flex-col justify-center items-center m-10">
+
           <%= form_with url: login_path do |f| %>
           <h2 class="text-3xl font-bold mb-15"><%= t('.title') %></h2>
 
@@ -11,17 +12,42 @@
             <%= f.label :email, class: "form-label mb-2" %>
             <%= f.email_field :email, class: "form-control w-full" %>
           </div>
-
           <div class="flex flex-col my-10" style="width: 400px;">
             <%= f.label :password, class: "form-label mb-2" %>
             <%= f.password_field :password, class: "form-control w-full" %>
           </div>
-
           <div class="flex justify-center mt-20" style="width: 400px;">
             <%= f.submit t('user_sessions.new.login'), class: "btn btn-neutral bg-base-100 text-secondary" %>
           </div>
-
           <% end %>
+
+          <!-- 区切り線-->
+          <div class="inline-flex items-center justify-center w-full p-10">
+            <hr class="w-64 h-px my-8 bg-secondary border-0">
+            <span class="absolute px-3 font-medium text-secondary -translate-x-1/2 bg-primary left-1/2">or</span>
+          </div>
+
+          <!-- googleログイン-->
+          <div class="flex flex-col justify-center items-center pt-5" >
+            <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+            <!-- ログインボタン -->
+            <div id="g_id_onload"
+              data-client_id="<%= Rails.application.credentials.dig(:google, :google_client_id) %>"
+              data-login_uri="<%= Settings.sorcery[:google_callback_url]%>"
+              data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+              data-type="standard"
+              data-size="large"
+              data-theme="outline"
+              data-text="sign_in_with"
+              data-shape="rectangular"
+              data-logo_alignment="left"
+              style="width: 100%; max-width: 200px;">
+              <%= link_to 'Login with Google', auth_at_provider_path(provider: :google) %>
+            </div>
+          </div>
         </div>
 
       </div>

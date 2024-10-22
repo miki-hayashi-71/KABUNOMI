@@ -68,6 +68,12 @@ gem 'meta-tags'
 # ページネーション
 gem 'kaminari'
 
+# google認証
+gem 'googleauth'
+
+# 定数管理（環境ごとに値を管理するため）
+gem 'config'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]

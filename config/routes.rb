@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
+  # googleログイン
+  post "oauth/callback" => "oauths#callback"
+  get "oauth/callback" => "oauths#callback"
+  get "oauth/:provider" => "oauths#oauth", as: :auth_at_provider
+
   # クイズ、解答の表示
   namespace :simple_mode do
     resources :quizzes, only: %i[new] do
