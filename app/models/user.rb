@@ -1,6 +1,10 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  # googleログインの設定
+  has_many :authentications, :dependent => :destroy
+  accepts_nested_attributes_for :authentications
+
   # Userモデルとquiz_historieモデルは一対多。ユーザーが削除されたら結果も削除
   has_many :quiz_histories, dependent: :destroy
   # Userモデルとchallenge_resultモデルは一対多。ユーザーが削除されたら結果も削除
