@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # ユーザーがログインしていなくても新規登録ページにアクセスできるように設定
-  # skip_before_action :require_login, only: %i[new create]
+  skip_before_action :require_login, only: %i[new create]
 
   # 新規ユーザーの登録フォームを表示するためのアクション
   def new
