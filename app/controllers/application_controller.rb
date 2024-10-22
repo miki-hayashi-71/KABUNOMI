@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  # 各ページのログイン要否の設定に必要
+  before_action :require_login
   add_flash_types :success, :danger, :alert
 
   private

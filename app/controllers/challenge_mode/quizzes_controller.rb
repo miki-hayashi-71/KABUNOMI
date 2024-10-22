@@ -4,9 +4,7 @@ module ChallengeMode
     # QuizUtilsモジュール（calculate_distanceメソッド、generate_choicesメソッド）
     include QuizUtils
 
-    # ログイン必須
-    before_action :require_login, only: %i[show new result start]
-    # ログイン不要
+    # ログイン不要（rankingのみ）
     skip_before_action :require_login, only: %i[ranking]
 
     def start;end

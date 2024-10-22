@@ -4,9 +4,11 @@ module SimpleMode
     # QuizUtilsモジュール（calculate_distanceメソッド、generate_choicesメソッド）
     include QuizUtils
 
+    # ログイン不要
+    skip_before_action :require_login
+
     # ログインしている場合にのみユーザーをセットする
     before_action :set_user_if_logged_in
-
 
     def new
       # ランダムに並び替え、そのうち2件を取得する

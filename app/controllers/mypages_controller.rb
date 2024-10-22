@@ -1,5 +1,7 @@
 class MypagesController < ApplicationController
+  # ログイン中のユーサー情報をセット
   before_action :set_user
+
 
   def show
     @quiz_histories = current_user.quiz_histories.includes(:location1, :location2)
