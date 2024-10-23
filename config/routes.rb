@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     get 'ranking', to: 'quizzes#ranking'
   end
 
-  # プロフィール
+  # プロフィール、回答履歴
   resource :mypage, only: %i[show edit update]
-
+  get "mypages/map_view" => "mypages#map_view"
 end

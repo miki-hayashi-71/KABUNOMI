@@ -32,6 +32,7 @@
             <th class="border border-gray-300 py-2">GOAL</th>
             <th class="border border-gray-300 py-2">距離</th>
             <th class="border border-gray-300 py-2">結果</th>
+            <th class="border border-gray-300 py-2">地図</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +43,11 @@
               <td class="border border-gray-300 px-4 py-1"><%= history.location2.name %></td>
               <td class="border border-gray-300 text-center px-4 py-1"><%= number_with_delimiter(history.correct_answer.to_i) %></td>
               <td class="border border-gray-300 px-4 py-1 text-center"><%= history.is_correct ? '正解' : '不正解' %></td>
+              <td class="border border-gray-300 px-4 py-1 text-center">
+                <a href="<%= mypages_map_view_path(id: history.id) %>" class="text-2xl">
+                  <i class="fa-solid fa-map-location-dot"></i>
+                </a>
+              </td>
             </tr>
           <% end %>
         </tbody>
