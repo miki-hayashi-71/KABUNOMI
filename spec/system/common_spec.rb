@@ -51,7 +51,7 @@ RSpec.describe 'トップページ', type: :system do
 
     it 'プライバシーポリシーページに遷移できること' do
       click_on 'プライバシーポリシー'
-      expect(page).to have_current_path('https://kiyac.app/privacypolicy/XxakzkL5Hxiv01Ka9WOG', url: true)
+      expect(page).to have_current_path(privacy_policy_path)
     end
 
     it 'お問い合わせページに遷移できること' do # クエリパラメータを無視し、主要な部分（ドメイン＋パス）が一致していれば成功
