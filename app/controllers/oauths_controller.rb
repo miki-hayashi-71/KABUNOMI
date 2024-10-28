@@ -11,21 +11,37 @@ class OauthsController < ApplicationController
   before_action :verify_g_csrf_token
 
   def oauth
-    # 指定されたプロバイダの認証ページにユーザーをリダイレクトさせる
+    #指定されたプロバイダの認証ページにユーザーをリダイレクトさせる
     login_at(auth_params[:provider])
   end
 
-  # googleauthライブラリのメソッドを使って、戻ってきたcredentialsをデコード
   def callback
-    # 戻ってきたcredentialsのトークンをデコードし、ペイロード(ユーザー情報など)を取得
-    payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: Rails.application.credentials.dig(:google, :google_client_id) )
-    # デコードしたトークンから取得したユーザーのメールアドレスで、ユーザーを検索または新規作成
-    user = User.find_or_create_by(email: payload['email'])
-    session[:user_id] = user.id
-    redirect_to root_path, success: 'ログインしました'
+    provider = auth_params[:provider]
+    # 既存のユーザーをプロバイダ情報を元に検索し、存在すればログイン
+    if (@user = login_from(provider))
+      redirect_to root_path, notice:"#{provider.titleize}アカウントでログインしました"
+    else
+      begin
+        # ユーザーが存在しない場合はプロバイダ情報を元に新規ユーザーを作成し、ログイン
+        signup_and_login(provider)
+        redirect_to root_path, notice:"#{provider.titleize}アカウントでログインしました"
+      rescue
+        redirect_to root_path, alert:"#{provider.titleize}アカウントでのログインに失敗しました"
+      end
+    end
   end
 
   private
+
+    def auth_params
+    params.permit(:code, :provider)
+  end
+
+  def signup_and_login(provider)
+    @user = create_from(provider)
+    reset_session
+    auto_login(@user)
+  end
 
   # クッキーに保存されたg_csrf_tokenとリクエストパラメータ内のg_csrf_tokenが一致するかを検証
   def verify_g_csrf_token

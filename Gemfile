@@ -48,7 +48,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 # ユーザー登録・ログイン・ログアウト
-gem 'sorcery', '0.16.3'
+gem 'sorcery', '0.16.5'
 
 # 環境変数の管理
 gem 'dotenv-rails'

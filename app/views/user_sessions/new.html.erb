@@ -45,7 +45,7 @@
               data-shape="rectangular"
               data-logo_alignment="left"
               style="width: 100%; max-width: 200px;">
-              <%= link_to 'Login with Google', auth_at_provider_path(provider: :google) %>
+              <%= link_to 'Login with Google', auth_at_provider_path(provider: :google, response_type: :code) %>
             </div>
           </div>
 
