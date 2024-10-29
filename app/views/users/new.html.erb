@@ -40,26 +40,9 @@
           </div>
 
           <!-- googleログイン-->
-          <div class="flex flex-col justify-center items-center" >
-            <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-            <!-- ログインボタン -->
-            <div id="g_id_onload"
-              data-client_id="<%= Rails.application.credentials.dig(:google, :google_client_id) %>"
-              data-login_uri="<%= Settings.sorcery[:google_callback_url]%>"
-              data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin"
-              data-type="standard"
-              data-size="large"
-              data-theme="outline"
-              data-text="signup_with"
-              data-shape="rectangular"
-              data-logo_alignment="left"
-              style="width: 100%; max-width: 200px;">
-              <%= link_to 'Login with Google', auth_at_provider_path(provider: :google) %>
-            </div>
-          </div>
+          <%= link_to auth_at_provider_path(provider: :google), data: { turbo: false } do %>
+            <%= image_tag "sign_up_with_google.png", class: "w-1/2 md:w-3/5 mx-auto py-5" %>
+          <% end %>
 
           <div class="grid gap-2 md:gap-4 nav-links md:flex md:justify-center pt-16">
             <%= link_to 'ログインはこちら', login_path, class: "text-secondary hover:text-base-100 border border-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2" %>
