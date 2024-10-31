@@ -5,14 +5,14 @@
     <% end %>
   </div>
   <div class="flex-none">
-    <ul class="menu menu-horizontal space-x-4">
+    <ul class="menu menu-horizontal">
       <li>
-        <button class="btn btn-neutral bg-base-100 text-secondary">
+        <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base mx-1 mb:mx-3">
           <%= link_to t('shared.before_login_header.login'), login_path, class: "nav-link"%>
         </button>
       </li>
       <li>
-        <button class="btn btn-neutral bg-base-100 text-secondary">
+        <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base mx-1 mb:mx-3">
           <%= link_to t('shared.before_login_header.create_user'), new_user_path, class: "nav-link"%>
         </button>
       </li>

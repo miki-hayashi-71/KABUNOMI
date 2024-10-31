@@ -1,33 +1,30 @@
-<div class="flex flex-col min-h-screen bg-base-100">
-  <div class="p-10 bg-base-100">
-    <div class="bg-primary rounded-lg text-secondary">
-      <div class="flex flex-col p-10">
+<div class="flex flex-col min-h-screen bg-base-100 py-10 px-3 md:p-10">
+  <div class="flex flex-col flex-1 bg-primary rounded-lg text-secondary px-2 py-10 md:p-10">
 
+    <div class="flex flex-col justify-center items-center md:m-10">
+      <h1 class="text-2xl md:text-3xl font-bold mb-10 md:mb-14"><%= t('.title') %></h1>
 
-      <h1 class="text-3xl font-bold mb-10"><%= t('.title') %></h1>
-
-      <table class="table-auto w-5/6 border-collapse ml-10">
+      <table class="table-auto justify-center items-center md:w-5/6 border-collapse mb:ml-10">
         <tr>
-          <th scope="row" class="text-left py-2"><%= User.human_attribute_name(:email) %></th>
-          <td class="text-left my-2"><%= current_user.email %></td>
+          <th scope="row" class="text-left text-sm md:text-base px-3 py-2"><%= User.human_attribute_name(:email) %></th>
+          <td class="text-left text-sm md:text-base px-3 py-2"><%= current_user.email %></td>
         </tr>
         <tr>
-          <th scope="row" class="text-left py-2"><%= User.human_attribute_name(:name) %></th>
-          <td class="text-left my-2"><%= current_user.name %></td>
+          <th scope="row" class="text-left text-sm md:text-base px-3 py-2"><%= User.human_attribute_name(:name) %></th>
+          <td class="text-left text-sm md:text-base px-3 py-2"><%= current_user.name %></td>
         </tr>
       </table>
 
-      <div class="flex justify-center py-10">
-        <button class="btn btn-neutral base-100 text-secondary m-5">
+      <div class="flex justify-center pt-5 pb-10 md:py-10">
+        <button class="btn btn-neutral base-100 text-secondary text-sm md:text-base">
           <%= link_to "編集", edit_mypage_path %>
         </button>
       </div>
 
-      <h2 class="text-xl font-bold mb-4">クイズ回答履歴</h2>
+      <h2 class="text-lg md:text-xl font-bold justify-center items-center mb-4">クイズ回答履歴</h2>
       <table class="table-auto w-full border-collapse border border-gray-200">
         <thead>
-          <tr class="bg-white text-lg">
-            <th class="border border-gray-300 py-2">日時</th>
+          <tr class="bg-accent text-sm md:text-lg">
             <th class="border border-gray-300 py-2">START</th>
             <th class="border border-gray-300 py-2">GOAL</th>
             <th class="border border-gray-300 py-2">距離</th>
@@ -38,13 +35,12 @@
         <tbody>
           <% @quiz_histories.each do |history| %>
             <tr class="bg-base-100">
-              <td class="border border-gray-300 px-4 py-1 text-center"><%= history.created_at.strftime('%Y-%m-%d') %></td>
-              <td class="border border-gray-300 px-4 py-1"><%= history.location1.name %></td>
-              <td class="border border-gray-300 px-4 py-1"><%= history.location2.name %></td>
-              <td class="border border-gray-300 text-center px-4 py-1"><%= number_with_delimiter(history.correct_answer.to_i) %></td>
-              <td class="border border-gray-300 px-4 py-1 text-center"><%= history.is_correct ? '正解' : '不正解' %></td>
-              <td class="border border-gray-300 px-4 py-1 text-center">
-                <a href="<%= mypages_map_view_path(id: history.id) %>" class="text-2xl">
+              <td class="border border-gray-300 px-1 md:px-4 py-1 text-center text-xs md:text-base"><%= history.location1.name %></td>
+              <td class="border border-gray-300 px-1 md:px-4 py-1 text-center text-xs md:text-base"><%= history.location2.name %></td>
+              <td class="border border-gray-300 px-1 md:px-4 py-1 text-center text-xs md:text-base"><%= number_with_delimiter(history.correct_answer.to_i) %></td>
+              <td class="border border-gray-300 px-1 md:px-4 py-1 text-center text-xs md:text-base"><%= history.is_correct ? '○' : '×' %></td>
+              <td class="border border-gray-300 px-1 md:px-4 py-1 text-center text-xs md:text-base">
+                <a href="<%= mypages_map_view_path(id: history.id) %>" class="text-xs md:text-2xl">
                   <i class="fa-solid fa-map-location-dot"></i>
                 </a>
               </td>
@@ -53,10 +49,10 @@
         </tbody>
       </table>
 
-      <div class="flex flex-row justify-center py-10">
+      <div class="flex flex-row justify-center py-5 md:py-10">
         <%= paginate @quiz_histories %>
       </div>
-
     </div>
+
   </div>
 </div>
