@@ -1,19 +1,17 @@
-<div class="flex flex-col min-h-screen bg-base-100">
-  <div class="p-10 bg-base-100">
-    <div class="bg-primary rounded-lg text-secondary">
+<div class="flex flex-col min-h-screen bg-base-100 py-10 px-3 md:p-10">
+  <div class="flex flex-col flex-1 bg-primary rounded-lg text-secondary px-2 py-10 md:p-10">
 
-      <div class="flex flex-col justify-center items-center px-10 pb-10">
-        <h2 class="text-3xl font-bold p-20">チャレンジモードを開始しますか？</h2>
-        <p class="text-base my-3">チャレンジモードでは10問のクイズに挑戦し、全問の正答数を記録します。</p>
-        <p class="text-base my-3">準備ができたら、以下のボタンをクリックしてクイズを開始してください。</p>
-      </div>
-
-      <div class="flex flex-row justify-center px-10 pt-5 pb-20 m-8">
-        <button class="btn text-base-100 font-bold bg-secondary m-3", id="new_quiz-link">
-          <%= link_to 'クイズを開始する', new_challenge_mode_quiz_path, class: "nav-link"%>
-        </button>
-      </div>
-
+    <div class="flex flex-col justify-center items-center md:m-10">
+      <h2 class="text-lg md:text-3xl font-bold py-7 md:px-10">チャレンジモードを開始しますか？</h2>
+      <p class="text-sm md:text-base my-3">チャレンジモードでは10問のクイズに挑戦し、全問の正答数を記録します。</p>
+      <p class="text-sm md:text-base my-3">準備ができたら、以下のボタンをクリックしてクイズを開始してください。</p>
     </div>
+
+    <div class="flex flex-row justify-center px-10 py-5 md:pt-5 md:pb-20">
+      <button class="btn text-base-100 text-sm md:text-base font-bold bg-secondary m-3", id="new_quiz-link">
+        <%= link_to 'クイズを開始する', new_challenge_mode_quiz_path, class: "nav-link"%>
+      </button>
+    </div>
+
   </div>
 </div>

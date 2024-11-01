@@ -1,12 +1,15 @@
-<div class="flex flex-col h-screen bg-base-100 p-10">
-  <div class="bg-primary rounded-lg text-secondary flex-1 flex flex-col">
-    <div class="flex flex-col p-10 flex-1">
+<div class="flex flex-col min-h-screen bg-base-100 py-10 px-3 md:p-10">
+  <div class="flex flex-col flex-1 bg-primary rounded-lg text-secondary px-2 py-10 md:p-10">
 
-      <h2 class="text-5xl font-semibold text-center mb-5"><%= @result %></h2>
+      <h2 class="text-3xl md:text-4xl font-semibold text-center mb-5"><%= @result %></h2>
 
-      <div class="bg-primary rounded-lg text-secondary mb-1">
-        <div class="flex flex-row justify-center items-center px-10 pt-5">
-          <p class="text-base"><span class="text-lg font-bold"><%= @locations[0].name %></span>から<span class="text-lg font-bold"><%= @locations[1].name %></span>までの距離は<span class="text-lg font-bold">約<%= @correct_answer %> km</span>です。</p>
+      <div class="bg-primary rounded-lg text-secondary md:mb-1">
+        <div class="flex flex-row justify-center items-center py-5 md:px-10 pt-5">
+          <p class="text-sm md:text-base"><span class="text-base md:text-lg font-bold"><%= @locations[0].name %></span>
+                                                                                      から
+                                                                                      <span class="text-base md:text-lg font-bold"><%= @locations[1].name %></span>
+                                                                                      までの距離は
+                                                                                      <span class="text-base md:text-lg font-bold">約<%= @correct_answer %> km</span>です。</p>
         </div>
       </div>
 
@@ -20,9 +23,8 @@
       </div>
 
       <div class="flex flex-row justify-center px-10">
-        <%= link_to 'もう1回やってみる', new_simple_mode_quiz_path, class: 'btn text-base-100 font-bold bg-secondary mt-10' %>
+        <%= link_to 'もう1回挑戦する', new_simple_mode_quiz_path, class: 'btn text-base-100 text-sm md:text-base font-bold bg-secondary mt-10' %>
       </div>
 
-    </div>
   </div>
 </div>
