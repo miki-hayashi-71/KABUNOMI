@@ -121,6 +121,7 @@ module ChallengeMode
                   .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
                   .order(correct_answers: :desc, created_at: :desc) # 正答数の降順に並べ替え
                   .page(params[:page])
+                  .limit(20)
     end
 
 
