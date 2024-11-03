@@ -106,7 +106,7 @@ module ChallengeMode
       # 上位20名のランキングを取得
       @rankings = ChallengeResult
                   .includes(:user) # N+1 問題を防ぐため、ユーザー情報を一括取得
-                  .order(correct_answers: :desc, created_at: :asc) # 正答数の降順に並べ替え
+                  .order(correct_answers: :desc, created_at: :desc) # 正答数の降順に並べ替え
                   .limit(20) # 上位20名を表示
 
       # 今回の挑戦が20位以内にランクインしているか確認。trueかfalseを代入
