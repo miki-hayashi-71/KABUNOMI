@@ -38,7 +38,7 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: 129.0.6668.100
+          chrome-version: 131.0.6778.85
           install-chromedriver: true
 
       - name: Set up Ruby # Rubyのセットアップ
