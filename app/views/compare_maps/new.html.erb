@@ -1,0 +1,251 @@
+<div class="flex flex-col min-h-screen bg-base-100 text-secondary py-10 px-3 md:p-10">
+  <div class="flex flex-row flex-1 gap-5">
+
+    <!-- map1 -->
+    <div class="flex flex-col flex-1 bg-primary rounded-lg p-4">
+
+      <!-- フォーム部分 -->
+      <h2 class="text-xl font-bold mb-4">Route1</h2>
+      <%= form_with url: compare_maps_path, method: :get, local: true, id: "routeForm" do |f| %>
+        <div class="flex flex-col">
+          <%= f.label :"出発地点", class: "form-label text-sm md:text-base mb-2" %>
+          <%= f.text_field :origin, class: "input input-bordered bg-white w-full", placeholder: "出発地点を入力"%>
+        </div>
+
+        <div class="flex flex-col">
+          <%= f.label :"到着地点", class: "form-label text-sm md:text-base mb-2" %>
+          <%= f.text_field :destination, class: "input input-bordered bg-white w-full", placeholder: "到着地点を入力"%>
+        </div>
+
+        <div class="flex flex-col">
+          <%= f.label :"交通手段", class: "form-label text-sm md:text-base mb-2" %>
+          <ul class="flex gap-14">
+            <li>
+              <%= f.radio_button :travelMode, 'DRIVING', checked: true, id: "travel-driving", class: "hidden peer" %>
+              <label for="travel-driving" class="flex flex-col items-center justify-center w-16 h-16 text-secondary bg-primary rounded-lg cursor-pointer peer-checked:bg-secondary peer-checked:text-white">
+                <i class="fa-solid fa-car text-2xl"></i>
+                <span class="text-sm mt-1">車</span>
+              </label>
+            </li>
+            <li>
+              <%= f.radio_button :travelMode, 'WALKING', id: "travel-walking", class: "hidden peer" %>
+              <label for="travel-walking" class="flex flex-col items-center justify-center w-16 h-16 text-secondary bg-primary rounded-lg cursor-pointer peer-checked:bg-secondary peer-checked:text-white">
+                <i class="fa-solid fa-person-walking text-2xl"></i>
+                <span class="text-sm mt-1">徒歩</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="flex justify-center items-center mt-5 w-full">
+          <%= f.submit "経路を検索", class: "btn btn-neutral bg-base-10 text-secondary text-sm md:text-base w-[100px] md:w-[200px]", id: "searchRouteButton" %>
+        </div>
+      <% end %>
+
+      <!-- Googleマップと経路の表示範囲 -->
+      <div class="flex justify-center flex-1">
+        <div class="flex rounded-lg text-secondary w-full">
+          <div class="flex flex-col my-3 p-3 bg-white w-full h-full">
+
+            <!-- 経路の詳細表示 -->
+            <div class="flex flex-row">
+              <div class="stats shadow basis-1/3 mb-2">
+                <div class="stat">
+                  <div class="stat-title">距離</div>
+                  <div id="distance1" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+              <div class="stats shadow basis-1/3 mb-2 mx-3">
+                <div class="stat">
+                  <div class="stat-title">所要時間</div>
+                  <div id="duration1" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+              <div class="stats shadow basis-1/3 mb-2">
+                <div class="stat">
+                  <div class="stat-title">ZoomLevel</div>
+                  <div id="zoomLevel1" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GoogleMap -->
+            <div id="map1" class="flex-1 w-full aspect-square" style="height: 400px; width: 100%;"></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- map2 -->
+    <div class="flex flex-col flex-1 bg-primary rounded-lg p-4">
+
+      <!-- フォーム部分 -->
+      <h2 class="text-xl font-bold mb-4">Route2</h2>
+      <%= form_with url: compare_maps_path, method: :get, local: true, id: "routeForm" do |f| %>
+        <div class="flex flex-col">
+          <%= f.label :"出発地点", class: "form-label text-sm md:text-base mb-2" %>
+          <%= f.text_field :origin, class: "input input-bordered bg-white w-full", placeholder: "出発地点を入力"%>
+        </div>
+
+        <div class="flex flex-col">
+          <%= f.label :"到着地点", class: "form-label text-sm md:text-base mb-2" %>
+          <%= f.text_field :destination, class: "input input-bordered bg-white w-full", placeholder: "到着地点を入力"%>
+        </div>
+
+        <div class="flex flex-col">
+          <%= f.label :"交通手段", class: "form-label text-sm md:text-base mb-2" %>
+          <ul class="flex gap-14">
+            <li>
+              <%= f.radio_button :travelMode, 'DRIVING', checked: true, id: "travel-driving", class: "hidden peer" %>
+              <label for="travel-driving" class="flex flex-col items-center justify-center w-16 h-16 text-secondary bg-primary rounded-lg cursor-pointer peer-checked:bg-secondary peer-checked:text-white">
+                <i class="fa-solid fa-car text-2xl"></i>
+                <span class="text-sm mt-1">車</span>
+              </label>
+            </li>
+            <li>
+              <%= f.radio_button :travelMode, 'WALKING', id: "travel-walking", class: "hidden peer" %>
+              <label for="travel-walking" class="flex flex-col items-center justify-center w-16 h-16 text-secondary bg-primary rounded-lg cursor-pointer peer-checked:bg-secondary peer-checked:text-white">
+                <i class="fa-solid fa-person-walking text-2xl"></i>
+                <span class="text-sm mt-1">徒歩</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="flex justify-center items-center mt-5 w-full">
+          <%= f.submit "経路を検索", class: "btn btn-neutral bg-base-10 text-secondary text-sm md:text-base w-[100px] md:w-[200px]", id: "searchRouteButton" %>
+        </div>
+      <% end %>
+
+      <!-- Googleマップと経路の表示範囲 -->
+      <div class="flex justify-center flex-1">
+        <div class="flex rounded-lg text-secondary w-full">
+          <div class="flex flex-col my-3 p-3 bg-white w-full h-full">
+
+            <!-- 経路の詳細表示 -->
+            <div class="flex flex-row">
+              <div class="stats shadow basis-1/3 mb-2">
+                <div class="stat">
+                  <div class="stat-title">距離</div>
+                  <div id="distance2" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+              <div class="stats shadow basis-1/3 mb-2 mx-3">
+                <div class="stat">
+                  <div class="stat-title">所要時間</div>
+                  <div id="duration2" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+              <div class="stats shadow basis-1/3 mb-2">
+                <div class="stat">
+                  <div class="stat-title">ZoomLevel</div>
+                  <div id="zoomLevel2" class="stat-value text-secondary text-2xl"> --- </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GoogleMap -->
+            <div id="map2" class="flex-1 w-full aspect-square" style="height: 400px; width: 100%;"></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function initMap() {
+    // デフォルトの地図の中心地を設定
+    const mapCenter = { lat: 35.6895, lng: 139.6917 };
+
+    // map1の初期化
+    const map1 = createMap('map1', mapCenter, 'zoomLevel1');
+    const directionsService1 = new google.maps.DirectionsService();
+    const directionsRenderer1 = new google.maps.DirectionsRenderer({ map: map1 });
+
+    // map2の初期化
+    const map2 = createMap('map2', mapCenter, 'zoomLevel2');
+    const directionsService2 = new google.maps.DirectionsService();
+    const directionsRenderer2 = new google.maps.DirectionsRenderer({ map: map2 });
+
+    // フォームのサブミットイベントにハンドラーを設定、各フォームにindexを設定 （map1:0、map2:1）
+    const forms = document.querySelectorAll('form#routeForm');
+    forms.forEach((form, index) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // フォームに入力されたデータを取得
+        const formData = new FormData(form);
+        const origin = formData.get('origin');
+        const destination = formData.get('destination');
+        const travelMode = formData.get('travelMode');
+
+        // 出発地点と到着地点のどちらかが入力されてなければアラートを表示
+        if (!origin || !destination) {
+          alert('出発地点と到着地点を入力してください。');
+          return;
+        }
+
+        // フォームに設定したindexに応じてそれぞれの地図を表示
+        if (index === 0) {
+          displayRoute(directionsService1, directionsRenderer1, origin, destination, 'distance1', 'duration1', travelMode);
+        } else if (index === 1) {
+          displayRoute(directionsService2, directionsRenderer2, origin, destination, 'distance2', 'duration2', travelMode);
+        }
+      });
+    });
+  }
+
+  // 地図を作成する関数
+  function createMap(elementId, center, zoomElementId) {
+    const map = new google.maps.Map(document.getElementById(elementId), {
+      zoom: 7,
+      center: center,
+      mapTypeControl: true,  // 地形図、航空写真等の選択肢を表示
+      scaleControl: true,  // 距離の縮尺を表示
+    });
+
+    // ズームレベル変更時のイベントリスナー
+    map.addListener('zoom_changed', () => {
+      const zoomLevel = map.getZoom();
+      document.getElementById(zoomElementId).textContent = `${zoomLevel}`;  // ビューにズームレベルを表示
+    });
+
+    return map;
+  }
+
+  // 経路を表示する関数
+  function displayRoute(directionsService, directionsRenderer, origin, destination, distanceId, durationId, travelMode) {
+    directionsService
+      .route({
+        origin: origin,
+        destination: destination,
+        travelMode: travelMode,
+      })
+      .then((response) => {
+        // 経路を地図に表示
+        directionsRenderer.setDirections(response);
+
+        // 距離と所要時間を取得
+        const distance =  response.routes[0].legs[0].distance.text;
+        const duration =  response.routes[0].legs[0].duration.text;
+
+        // ビューに距離と所要時間を表示
+        document.getElementById(distanceId).textContent = `${distance}`;
+        document.getElementById(durationId).textContent = `${duration}`;
+      })
+      .catch((error) => {
+        console.error('Directions request failed', error);
+        alert('経路の取得に失敗しました。入力内容を確認してください。');
+      });
+  }
+
+  // ページロード時にinitMapを実行
+  window.initMap = initMap;
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAPS_JAVASCRIPT_API'] %>&callback=initMap&language=ja" async defer></script>
