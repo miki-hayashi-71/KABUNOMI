@@ -46,5 +46,9 @@ Rails.application.routes.draw do
 
   # プロフィール、回答履歴
   resource :mypage, only: %i[show edit update]
-  get "mypages/map_view" => "mypages#map_view"
+  get "mypages/map_view", to: "mypages#map_view"
+
+  # 地図比較ツール
+  resources :compare_maps, only: %i[new create]
+
 end

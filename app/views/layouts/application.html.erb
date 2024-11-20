@@ -11,7 +11,7 @@
       gtag('config', 'G-ZQ5E3CZ2ZF');
     </script>
 
-    <%= favicon_link_tag('favicon.ico') %>　
+    <%= favicon_link_tag('favicon.ico') %>
 
     <title>距離感どのくらい?</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -37,7 +37,7 @@
     </div>
     <!-- quizzes コントローラーの new または show アクション、mypagesコントローラーの map_view アクションでのみ Google Maps API を読み込む -->
     <% if (controller_name == "quizzes" && (action_name == "new" || action_name == "show")) || (controller_name == "mypages" && action_name == "map_view") %>
-      <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAPS_JAVASCRIPT_API'] %>&language=ja&callback=initMap" async defer></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAPS_JAVASCRIPT_API'] %>&callback=initMap" async defer></script>
       <%= javascript_include_tag 'map.js' %>
     <% end %>
   </body>
