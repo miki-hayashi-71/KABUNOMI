@@ -19,7 +19,7 @@
         <p class="text-base lg:text-lg text-secondary mx-5 mb-8">1問ずつ解答を確認しながらクイズに挑戦</p>
         <div class="flex justify-end mr-10">
           <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60", id="simple_mode-link">
-            <%= link_to "シンプルモードに挑戦！", new_simple_mode_quiz_path %>
+            <%= link_to "シンプルモードに挑戦", new_simple_mode_quiz_path %>
           </button>
         </div>
 
@@ -27,12 +27,12 @@
         <p class="text-base lg:text-lg text-secondary mx-5 mb-1">10問連続で挑戦し、正答数を競うランキングに挑戦する</p>
         <p class="text-base lg:text-lg text-secondary mx-5 mb-8">※ チャレンジモードにはユーザー登録が必要です</p>
         <div class="flex justify-end mr-10">
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-5 w-60", id="simple_mode-link">
-            <%= link_to "チャレンジモードに挑戦！", start_challenge_mode_quizzes_path %>
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-5 w-60", id="challenge_mode-link">
+            <%= link_to "チャレンジモードに挑戦", start_challenge_mode_quizzes_path %>
           </button>
         </div>
         <div class="flex justify-end mr-10">
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60", id="simple_mode-link">
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60", id="ranking-link">
             <%= link_to "チャレンジモードの \n ランキングを見る", challenge_mode_ranking_path , class: "whitespace-break-spaces"%>
           </button>
         </div>
