@@ -1,47 +1,66 @@
-<div class="flex flex-col min-h-screen bg-base-100">
+<div class="flex flex-col min-h-screen bg-base-100 py-10 px-3 md:p-10">
   <div class="flex justify-center py-10">
     <%= image_tag "top.png" %>
   </div>
 
-  <div class="bg-base-100 py-5 px-3 md:p-10">
-    <div class="bg-primary rounded-lg text-secondary">
+  <h1 class="text-secondary text-center py-14"><span class="text-xl font-bold">「距離感」</span>をテーマとする<span class="text-xl font-bold">クイズ</span>と実用的な<span class="text-xl font-bold">ツール</span>を提供</h1>
 
-      <div class="flex flex-col justify-center lg:flex-row">
+  <div class="hero bg-primary rounded-lg mt-20">
+    <div class="hero-content flex-col lg:flex-row-reverse py-14">
 
-        <div class="flex flex-col justify-center text-secondary my-8 mx-2 md:p-2 md:m-8">
-          <h2 class="text-2xl md:text-3xl font-semibold flex justify-center md:mx-5 my-5">正解の距離を当てよう！</h2>
-          <p class="text-sm md:text-base my-5"><span class="text-base md:text-lg font-bold">シンプルモード</span>では、1問ずつ挑戦し、回答を地図上で確認できます。</p>
-          <p class="text-sm md:text-base my-3"><span class="text-base md:text-lg font-bold">チャレンジモード</span>では、10問連続で挑戦し、正答数を競うランキングに挑戦することができます。</p>
-          <p class="text-sm font-bold md:text-base my-1">※ チャレンジモードにはユーザー登録が必要です</p>
-        </div>
+      <div class="max-w-sm rounded-lg shadow-2xl mx-5">
+        <%= image_tag "quizzes.png" %>
+      </div>
 
-        <div class="flex flex-col justify-end p-2 mx-8 mx-10">
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base my-5", id="simple_mode-link">
+      <div class="flex flex-col w-460">
+        <h1 class="text-3xl lg:text-4xl text-secondary font-bold mt-5">3択のクイズで距離感を養う</h1>
+
+        <h2 class="text-xl lg:text-2xl text-secondary font-bold mt-8 lg:mt-16 mb-1 mb-1">シンプルモード</h2>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-8">1問ずつ解答を確認しながらクイズに挑戦</p>
+        <div class="flex justify-end mr-10">
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60", id="simple_mode-link">
             <%= link_to "シンプルモードに挑戦！", new_simple_mode_quiz_path %>
           </button>
+        </div>
 
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base my-5", id="challenge_mode-link">
+        <h2 class="text-xl lg:text-2xl text-secondary font-bold mt-8 lg:mt-16 mb-1 mb-1">チャレンジモード</h2>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-1">10問連続で挑戦し、正答数を競うランキングに挑戦する</p>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-8">※ チャレンジモードにはユーザー登録が必要です</p>
+        <div class="flex justify-end mr-10">
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-5 w-60", id="simple_mode-link">
             <%= link_to "チャレンジモードに挑戦！", start_challenge_mode_quizzes_path %>
           </button>
-
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base my-5", id="ranking-link" >
+        </div>
+        <div class="flex justify-end mr-10">
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60", id="simple_mode-link">
             <%= link_to "チャレンジモードの \n ランキングを見る", challenge_mode_ranking_path , class: "whitespace-break-spaces"%>
           </button>
         </div>
       </div>
 
-      <div class="flex flex-col justify-center lg:flex-row">
-        <div class="flex flex-col justify-center text-secondary my-8 mx-2 md:p-2 md:m-8">
-          <h2 class="text-2xl md:text-3xl font-semibold flex justify-center md:mx-5 my-5">地図比較ツール</h2>
-          <p class="text-sm md:text-base my-5"><span class="text-base md:text-lg">地図を横並びで表示して見比べることができるツールです。</p>
-        </div>
+    </div>
+  </div>
 
-        <div class="flex flex-col justify-end p-2 mx-8 mx-10">
-          <button class="btn btn-neutral bg-base-100 text-secondary text-sm md:text-base my-5">
-            <%= link_to "地図を比較する", new_compare_map_path %>
+  <div class="hero bg-primary rounded-lg mt-1">
+    <div class="hero-content flex-col lg:flex-row-reverse py-14">
+
+      <div class="max-w-sm rounded-lg shadow-2xl mx-5">
+        <%= image_tag "compare_map.png" %>
+      </div>
+
+      <div class="flex flex-col w-460">
+        <h1 class="text-3xl lg:text-4xl text-secondary font-bold mt-5">地図を並べて比較するツール</h1>
+
+        <p class="text-base lg:text-lg text-secondary mx-5 mt-8 lg:mt-16 mb-1">土地勘のない地域の距離感を</p>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-5">直感的に把握するための地図比較ツール。</p>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-1">馴染みのある土地と並べて表示し、</p>
+        <p class="text-base lg:text-lg text-secondary mx-5 mb-8">移動距離や位置関係のイメージを掴むことを後押しする。</p>
+
+        <div class="flex justify-end mr-10">
+          <button class="btn btn-neutral bg-base-100 text-secondary text-sm lg:text-base ml-5 mb-1 w-60">
+            <%= link_to "地図比較ツール", compare_maps_path %>
           </button>
         </div>
-
       </div>
 
     </div>
