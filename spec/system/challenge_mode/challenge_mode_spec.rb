@@ -22,7 +22,7 @@ RSpec.describe 'チャレンジモードクイズ', type: :system do
     it 'トップページからクイズ開始画面に遷移できること' do
       handle_unexpected_alert do
         visit root_path
-        click_on 'チャレンジモードに挑戦！', id: 'challenge_mode-link'
+        click_on 'チャレンジモードに挑戦', id: 'challenge_mode-link'
         expect(page).to have_current_path(start_challenge_mode_quizzes_path)
       end
     end
